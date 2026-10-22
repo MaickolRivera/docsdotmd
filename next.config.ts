@@ -18,6 +18,12 @@ const nextConfig: NextConfig = {
   // autorizados deben responder 404 real, así que se usa el renderizado
   // dinámico clásico en lugar de Cache Components.
   poweredByHeader: false,
+  experimental: {
+    serverActions: {
+      // Adjuntos de hasta 5 MB más el margen del multipart.
+      bodySizeLimit: "6mb",
+    },
+  },
   turbopack: {
     rules: {
       "*.css": {
