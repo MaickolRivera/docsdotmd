@@ -1,0 +1,25 @@
+name: Keep-alive de Supabase
+
+# El plan gratuito de Supabase pausa el proyecto tras 7 días sin actividad.
+on:
+  schedule:
+    - cron: "0 12 */3 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Llamar a keep_alive()
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          AUTH=()
+          if [[ "$SUPABASE_ANON_KEY" == *.*.* ]]; then AUTH=(-H "Authorization: Bearer $SUPABASE_ANON_KEY"); fi
+          curl --fail --silent --show-error -X POST "$SUPABASE_URL/rest/v1/rpc/keep_alive" \
+            -H "apikey: $SUPABASE_ANON_KEY" "${AUTH[@]}" \
+            -H "Content-Type: application/json" -d '{}'
