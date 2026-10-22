@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   checks:
-    name: Lint y tipos
+    name: Lint, tipos y pruebas unitarias
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +26,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
+      - run: pnpm test:unit
 
   secrets:
     name: Gitleaks
