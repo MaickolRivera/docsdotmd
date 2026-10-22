@@ -42,6 +42,12 @@ export function dbFailure(error: DbError, overrides: Overrides = {}): ActionFail
   if (code === "23505" && overrides.unique) {
     return fail(overrides.unique.message, { [overrides.unique.field]: overrides.unique.message })
   }
+  if (message.includes("last_owner")) return fail(t.settings.members.lastOwner)
+  if (message.includes("slug_not_reserved")) {
+    return fail(t.validation.slugReserved, { slug: t.validation.slugReserved })
+  }
+  if (message.includes("slug_format"))
+    return fail(t.validation.slugFormat, { slug: t.validation.slugFormat })
   if (code === "42501" || message.includes("row-level security") || message.includes("forbidden")) {
     return fail(t.common.forbidden)
   }
