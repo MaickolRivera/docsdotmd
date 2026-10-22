@@ -1,7 +1,10 @@
 import { z } from "zod"
 
 import {
+  PAGE_CONTENT_MAX_LENGTH,
+  PAGE_STATUSES,
   RESERVED_ORG_SLUGS,
+  RESERVED_PAGE_SLUGS,
   RESERVED_SPACE_SLUGS,
   ROLES,
   SPACE_PERMISSIONS,
@@ -144,3 +147,28 @@ export const saveSpaceSchema = spaceFormSchema.extend({
 export const spaceIdSchema = z.object({ orgId: idSchema, spaceId: idSchema })
 
 export const moveSchema = z.object({ direction: z.enum(["up", "down"]) })
+
+// ---------------------------------------------------------------------------
+// Páginas
+// ---------------------------------------------------------------------------
+export const pageFormSchema = z.object({
+  title: textSchema(1, 160),
+  slug: slugSchema(1, 80, RESERVED_PAGE_SLUGS),
+  parentId: idSchema.nullable(),
+  status: z.enum(PAGE_STATUSES),
+  content: z
+    .string()
+    .max(PAGE_CONTENT_MAX_LENGTH, { error: v.contentTooLong(PAGE_CONTENT_MAX_LENGTH) }),
+})
+export type PageFormInput = z.infer<typeof pageFormSchema>
+
+export const savePageSchema = pageFormSchema.extend({ pageId: idSchema })
+
+export const createPageSchema = z.object({
+  spaceId: idSchema,
+  parentId: idSchema.nullable(),
+})
+
+export const pageIdSchema = z.object({ pageId: idSchema })
+
+export const attachmentIdSchema = z.object({ attachmentId: idSchema })

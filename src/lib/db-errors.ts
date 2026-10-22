@@ -43,6 +43,7 @@ export function dbFailure(error: DbError, overrides: Overrides = {}): ActionFail
     return fail(overrides.unique.message, { [overrides.unique.field]: overrides.unique.message })
   }
   if (message.includes("last_owner")) return fail(t.settings.members.lastOwner)
+  if (message.includes("page_cycle")) return fail(t.editor.cycle, { parentId: t.editor.cycle })
   if (message.includes("slug_not_reserved")) {
     return fail(t.validation.slugReserved, { slug: t.validation.slugReserved })
   }

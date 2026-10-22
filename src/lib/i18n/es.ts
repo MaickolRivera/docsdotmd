@@ -195,6 +195,20 @@ export const es = {
     spaces: "Espacios",
   },
 
+  sidebar: {
+    label: "Páginas del espacio",
+    newPage: "Página",
+    newSubpage: "Agregar subpágina",
+    reorder: "Ordenar",
+    doneReordering: "Listo",
+    moveUp: "Subir",
+    moveDown: "Bajar",
+    empty: "Este espacio aún no tiene páginas.",
+    mobileTrigger: "Páginas",
+    expand: "Expandir",
+    collapse: "Contraer",
+  },
+
   reader: {
     breadcrumb: "Ruta de navegación",
     onThisPage: "En esta página",
@@ -212,6 +226,130 @@ export const es = {
     noSpacesAdmin: "Crea el primer espacio desde los ajustes de la organización.",
     noSpacesMember: "Aún no tienes acceso a ningún espacio de esta organización.",
     goToSettings: "Ir a ajustes",
+  },
+
+  editor: {
+    title: "Título",
+    titlePlaceholder: "Título de la página",
+    newPageTitle: "Nueva página",
+    slug: "Slug",
+    parent: "Página padre",
+    noParent: "Sin página padre",
+    status: "Estado",
+    save: "Guardar",
+    saving: "Guardando…",
+    saved: "Página guardada",
+    unsaved: "Cambios sin guardar",
+    upToDate: "Todo guardado",
+    viewPage: "Ver página",
+    backToPage: "Volver",
+    deletePage: "Borrar página",
+    deleteTitle: "¿Borrar esta página?",
+    deleteDescription: (children: number) =>
+      children > 0
+        ? `También se borrarán ${children} subpáginas y todos sus adjuntos. Esta acción no se puede deshacer.`
+        : "Se borrará la página con sus adjuntos. Esta acción no se puede deshacer.",
+    deleted: "Página borrada",
+    tabEdit: "Editar",
+    tabPreview: "Vista previa",
+    placeholder: "Escribe en markdown… Usa / al inicio de una línea para insertar componentes.",
+    previewEmpty: "La vista previa aparecerá aquí.",
+    shortcutHint: "Ctrl + S para guardar",
+    restoreTitle: "Tienes un borrador local más reciente que la versión guardada.",
+    restore: "Restaurar",
+    discard: "Descartar",
+    leaveConfirm: "Tienes cambios sin guardar. ¿Quieres salir de todas formas?",
+    slugTaken: "Ya existe una página con ese slug en este espacio.",
+    cycle: "Una página no puede ser hija de sí misma ni de sus subpáginas.",
+    toolbar: {
+      bold: "Negrita",
+      italic: "Cursiva",
+      heading: "Título",
+      list: "Lista",
+      link: "Enlace",
+      code: "Código",
+      codeBlock: "Bloque de código",
+      table: "Tabla",
+      insert: "Insertar componente",
+      attach: "Adjuntar archivo",
+      guide: "Guía",
+      guideHint: "Componentes e iconos disponibles (se abre en otra pestaña)",
+    },
+    icons: {
+      unknown: (names: string[]) =>
+        `Icono no reconocido: ${names.join(", ")}. Se mostrará el icono por defecto.`,
+      seeAll: "Ver iconos disponibles",
+    },
+    components: {
+      steps: { label: "Pasos", description: "Guía numerada, un ### por paso" },
+      codeTabs: {
+        label: "Pestañas de código",
+        description: "El mismo ejemplo en varios lenguajes",
+      },
+      callout: { label: "Aviso", description: "Nota, consejo, advertencia o peligro" },
+      accordion: { label: "Acordeón", description: "Contenido que se despliega" },
+      card: { label: "Tarjeta", description: "Icono, título, texto y enlace" },
+      button: { label: "Botón", description: "Enlace con estilo de botón" },
+      columns: { label: "Columnas", description: "Dos columnas; sepáralas con ***" },
+    },
+    // Plantillas que se insertan con el menú "Insertar componente" o con "/".
+    templates: {
+      steps: `:::steps
+### Primer paso
+Describe el primer paso.
+
+### Segundo paso
+Describe el segundo paso.
+:::`,
+      codeTabs: `::::code-tabs
+~~~js title="JavaScript"
+console.log("Hola");
+~~~
+~~~python title="Python"
+print("Hola")
+~~~
+::::`,
+      callout: `:::callout{type="info" title="Importante"}
+Escribe aquí el aviso.
+:::`,
+      accordion: `:::accordion{title="Pregunta frecuente"}
+Escribe aquí la respuesta.
+:::`,
+      card: `:::card{title="Título" icon="book-open" href="/"}
+Descripción breve.
+:::`,
+      button: `:button[Texto del botón]{href="/" variant="primary"}`,
+      columns: `::::columns
+### Columna izquierda
+Contenido de la izquierda.
+
+***
+
+### Columna derecha
+Contenido de la derecha.
+::::`,
+      table: `| Columna | Columna |
+| --- | --- |
+| Celda | Celda |`,
+      link: "texto del enlace",
+      bold: "texto en negrita",
+      italic: "texto en cursiva",
+      code: "código",
+      heading: "Título",
+      listItem: "Elemento",
+    },
+    moreActions: "Más acciones",
+    attachments: {
+      title: "Adjuntos",
+      empty: "Arrastra o pega archivos en el editor, o usa el botón de adjuntar.",
+      uploading: (name: string) => `Subiendo ${name}…`,
+      uploaded: "Archivo adjuntado",
+      tooLarge: "El archivo supera el límite de 5 MB.",
+      typeNotAllowed: "Solo se permiten imágenes, PDF y archivos de texto.",
+      insert: "Insertar en la página",
+      delete: "Borrar adjunto",
+      deleted: "Adjunto borrado",
+    },
   },
 
   settings: {

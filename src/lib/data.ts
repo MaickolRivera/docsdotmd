@@ -3,8 +3,9 @@ import "server-only"
 import { cache } from "react"
 
 import { getCurrentUser, getSupabase } from "@/lib/auth"
-import type { Role, SpacePermission, SpaceVisibility } from "@/lib/constants"
+import type { PageStatus, Role, SpacePermission, SpaceVisibility } from "@/lib/constants"
 import { toDbError } from "@/lib/db-errors"
+import type { PageListItem } from "@/lib/pages-tree"
 
 // Lecturas para Server Components. Todas pasan por RLS con la sesión del
 // usuario: si algo no le corresponde, simplemente no aparece (y la página
@@ -83,6 +84,45 @@ export const getSpaces = cache(async (orgId: string): Promise<SpaceSummary[]> =>
     .order("name")
   if (error) throw toDbError(error)
   return data as SpaceSummary[]
+})
+
+export const getSpace = cache(async (orgId: string, spaceSlug: string) => {
+  const spaces = await getSpaces(orgId)
+  return spaces.find((space) => space.slug === spaceSlug) ?? null
+})
+
+export const canEditSpace = cache(async (spaceId: string): Promise<boolean> => {
+  const supabase = await getSupabase()
+  const { data, error } = await supabase.rpc("can_edit_space", { p_space: spaceId })
+  if (error) throw toDbError(error)
+  return data === true
+})
+
+/** Páginas visibles del espacio (sin contenido): para el sidebar y la navegación. */
+export const getSpacePages = cache(async (spaceId: string): Promise<PageListItem[]> => {
+  const supabase = await getSupabase()
+  const { data, error } = await supabase
+    .from("pages")
+    .select("id, parent_id, title, slug, status, position")
+    .eq("space_id", spaceId)
+    .order("position")
+    .order("title")
+  if (error) throw toDbError(error)
+  return data.map((page) => ({ ...page, status: page.status as PageStatus }))
+})
+
+export const getPageContent = cache(async (pageId: string) => {
+  const supabase = await getSupabase()
+  const { data, error } = await supabase
+    .from("pages")
+    .select(
+      "id, org_id, space_id, parent_id, title, slug, status, content_md, updated_at, updated_by_profile:profiles!pages_updated_by_fkey(full_name)",
+    )
+    .eq("id", pageId)
+    .maybeSingle()
+  if (error) throw toDbError(error)
+  if (!data) return null
+  return { ...data, status: data.status as PageStatus }
 })
 
 // ---------------------------------------------------------------------------
