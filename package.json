@@ -9,7 +9,13 @@
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:push": "supabase db push",
+    "db:types": "supabase gen types typescript --local --schema public > src/types/database.ts",
+    "db:types:linked": "supabase gen types typescript --linked --schema public > src/types/database.ts"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -33,6 +39,7 @@
     "eslint-config-next": "16.4.2",
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "supabase": "^2.121.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
