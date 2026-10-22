@@ -32,6 +32,7 @@
     "@supabase/supabase-js": "^2.118.0",
     "@uiw/react-codemirror": "^4.25.12",
     "class-variance-authority": "^0.7.1",
+    "cmdk": "^1.1.1",
     "cn": "^0.5.0",
     "github-slugger": "^2.0.0",
     "hast-util-to-string": "^3.0.1",
