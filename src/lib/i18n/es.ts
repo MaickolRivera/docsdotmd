@@ -98,6 +98,9 @@ export const es = {
   },
 
   landing: {
+    nav: {
+      guide: "Guía",
+    },
     title: "La documentación de tu equipo, clara y",
     titleAccent: "en un solo lugar.",
     subtitle:
@@ -144,6 +147,25 @@ export const es = {
     spaces: "Espacios",
   },
 
+  reader: {
+    breadcrumb: "Ruta de navegación",
+    onThisPage: "En esta página",
+    editPage: "Editar página",
+    previous: "Anterior",
+    next: "Siguiente",
+    updatedAt: (date: string) => `Actualizado el ${date}`,
+    updatedBy: (name: string, date: string) => `Actualizado por ${name} el ${date}`,
+    draftNotice: "Borrador: solo la ven quienes pueden editar este espacio.",
+    emptySpaceTitle: "Este espacio está vacío",
+    emptySpaceEditor: "Crea la primera página para empezar.",
+    emptySpaceViewer: "Todavía no hay páginas publicadas en este espacio.",
+    createFirst: "Crear la primera página",
+    noSpacesTitle: "No hay espacios disponibles",
+    noSpacesAdmin: "Crea el primer espacio desde los ajustes de la organización.",
+    noSpacesMember: "Aún no tienes acceso a ningún espacio de esta organización.",
+    goToSettings: "Ir a ajustes",
+  },
+
   docs: {
     callout: {
       info: "Nota",
@@ -158,6 +180,25 @@ export const es = {
     footnotes: "Notas",
     footnoteBack: "Volver al texto",
     openLink: "Abrir enlace",
+  },
+
+  guide: {
+    title: "Guía de componentes",
+    description:
+      "Cómo escribir una página en DOCSmd: cada componente con su sintaxis y cómo se ve, y la lista de iconos disponibles.",
+    lead: "Todo lo que puedes usar al escribir una página, con su sintaxis y cómo se ve. Copia cualquier ejemplo y pégalo en el editor.",
+    result: "Resultado",
+    viewSource: "Ver el markdown de esta sección",
+    goToApp: "Ir a la app",
+    icons: {
+      search: "Buscar por nombre o alias…",
+      count: (n: number) => (n === 1 ? "1 icono" : `${n} iconos`),
+      empty: (query: string) => `No hay iconos para «${query}».`,
+      copy: (name: string) => `Copiar el nombre ${name}`,
+      copied: (name: string) => `Copiado: ${name}`,
+      copyFailed: "No se pudo copiar. Selecciona el nombre y cópialo a mano.",
+      aliases: (aliases: string[]) => `También: ${aliases.join(", ")}`,
+    },
   },
 
   notFound: {
