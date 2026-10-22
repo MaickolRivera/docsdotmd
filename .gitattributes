@@ -1,0 +1,4 @@
+# Siempre LF (como Prettier), aunque Git en Windows tenga core.autocrlf=true.
+* text=auto eol=lf
+*.png binary
+*.ico binary
