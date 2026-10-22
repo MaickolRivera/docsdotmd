@@ -1,0 +1,10 @@
+# Generados o de terceros
+.next
+node_modules
+pnpm-lock.yaml
+next-env.d.ts
+src/components/ui
+src/types/database.ts
+supabase/.temp
+playwright-report
+test-results
