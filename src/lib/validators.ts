@@ -1,6 +1,12 @@
 import { z } from "zod"
 
-import { RESERVED_ORG_SLUGS, ROLES } from "@/lib/constants"
+import {
+  RESERVED_ORG_SLUGS,
+  RESERVED_SPACE_SLUGS,
+  ROLES,
+  SPACE_PERMISSIONS,
+  SPACE_VISIBILITIES,
+} from "@/lib/constants"
 import { t } from "@/lib/i18n"
 import { SLUG_PATTERN } from "@/lib/slug"
 
@@ -117,3 +123,24 @@ export const groupMemberSchema = z.object({
   groupId: idSchema,
   userId: idSchema,
 })
+
+// ---------------------------------------------------------------------------
+// Espacios
+// ---------------------------------------------------------------------------
+export const spaceFormSchema = z.object({
+  name: textSchema(1, 60),
+  slug: slugSchema(1, 48, RESERVED_SPACE_SLUGS),
+  icon: z.string().regex(/^[a-z0-9-]{1,40}$/),
+  visibility: z.enum(SPACE_VISIBILITIES),
+  groups: z.array(z.object({ groupId: idSchema, permission: z.enum(SPACE_PERMISSIONS) })).max(100),
+})
+export type SpaceFormInput = z.infer<typeof spaceFormSchema>
+
+export const saveSpaceSchema = spaceFormSchema.extend({
+  orgId: idSchema,
+  spaceId: idSchema.optional(),
+})
+
+export const spaceIdSchema = z.object({ orgId: idSchema, spaceId: idSchema })
+
+export const moveSchema = z.object({ direction: z.enum(["up", "down"]) })
