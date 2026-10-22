@@ -39,6 +39,13 @@ export const es = {
     viewer: "Lector",
   },
 
+  roleDescriptions: {
+    owner: "Control total, incluso renombrar o borrar la organización",
+    admin: "Gestiona miembros, grupos y espacios",
+    editor: "Crea y edita páginas",
+    viewer: "Solo lee la documentación",
+  },
+
   validation: {
     required: "Este campo es obligatorio",
     email: "Escribe un correo válido",
@@ -155,6 +162,21 @@ export const es = {
       submit: "Crear organización",
       slugTaken: "Esa dirección ya está en uso.",
     },
+  },
+
+  invitation: {
+    title: "Invitación",
+    description: (org: string, role: string) => `Te invitaron a ${org} con el rol ${role}.`,
+    accept: "Aceptar invitación",
+    accepting: "Aceptando…",
+    wrongEmail: (email: string) =>
+      `Esta invitación es para ${email}. Inicia sesión con ese correo para aceptarla.`,
+    expired: "La invitación expiró. Pide a quien te invitó que te envíe una nueva.",
+    invalid: "La invitación no es válida o ya se usó.",
+    alreadyAccepted: "Esta invitación ya se aceptó.",
+    goToOrg: "Ir a la organización",
+    switchAccount: "Usar otra cuenta",
+    goHome: "Ir a mis organizaciones",
   },
 
   header: {

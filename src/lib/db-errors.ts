@@ -48,6 +48,9 @@ export function dbFailure(error: DbError, overrides: Overrides = {}): ActionFail
   }
   if (message.includes("slug_format"))
     return fail(t.validation.slugFormat, { slug: t.validation.slugFormat })
+  if (message.includes("invalid_invitation")) return fail(t.invitation.invalid)
+  if (message.includes("expired_invitation")) return fail(t.invitation.expired)
+  if (message.includes("email_mismatch")) return fail(t.invitation.invalid)
   if (code === "42501" || message.includes("row-level security") || message.includes("forbidden")) {
     return fail(t.common.forbidden)
   }
