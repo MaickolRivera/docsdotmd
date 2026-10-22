@@ -144,6 +144,22 @@ export const es = {
     spaces: "Espacios",
   },
 
+  docs: {
+    callout: {
+      info: "Nota",
+      tip: "Consejo",
+      warning: "Advertencia",
+      danger: "Peligro",
+    },
+    copyCode: "Copiar código",
+    codeCopied: "Copiado",
+    codeTabs: "Ejemplos de código",
+    externalLink: "(abre en otra pestaña)",
+    footnotes: "Notas",
+    footnoteBack: "Volver al texto",
+    openLink: "Abrir enlace",
+  },
+
   notFound: {
     title: "Página no encontrada",
     description: "La página no existe o no tienes acceso a ella.",

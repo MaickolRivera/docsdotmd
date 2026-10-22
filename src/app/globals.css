@@ -2,6 +2,8 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -144,4 +146,142 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Contenido de las páginas (markdown) y sus componentes.
+   Las clases de typography (prose, prose-zinc, dark:prose-invert) van en el
+   componente DocsMarkdown; aquí solo se ajustan. Estas reglas van fuera de
+   las capas de Tailwind para que tengan prioridad sobre las de typography.
+   --------------------------------------------------------------------------- */
+.docs-content.prose {
+  --tw-prose-links: var(--primary);
+  --tw-prose-invert-links: var(--primary);
+  --tw-prose-hr: var(--border);
+  --tw-prose-invert-hr: var(--border);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-invert-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+  --tw-prose-invert-td-borders: var(--border);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.docs-content :where(h1, h2, h3, h4):not(:where(.not-prose *)) {
+  @apply font-semibold tracking-tight;
+}
+
+/* El hueso tiene casi la misma luminosidad que el texto: los enlaces van
+   subrayados para no depender solo del color. */
+.docs-content :where(a):not(:where(.not-prose *)) {
+  @apply font-medium underline decoration-primary/40 underline-offset-4 hover:decoration-primary;
+}
+
+.docs-content :where(code):not(:where(pre *, .not-prose *)) {
+  @apply rounded-md border bg-muted px-1.5 py-0.5 font-mono text-[0.85em] font-medium;
+}
+.docs-content :where(code):not(:where(pre *, .not-prose *))::before,
+.docs-content :where(code):not(:where(pre *, .not-prose *))::after {
+  content: none;
+}
+
+/* Listas de tareas (GFM) sin viñeta, como en GitHub. */
+.docs-content .contains-task-list {
+  list-style: none;
+  padding-inline-start: 0.25em;
+}
+.docs-content .task-list-item input {
+  margin: 0 0.5em 0 0;
+  vertical-align: middle;
+}
+
+.docs-content :where(img):not(:where(.not-prose *)) {
+  @apply rounded-xl border;
+}
+
+.docs-content > :first-child {
+  margin-top: 0;
+}
+
+/* Pasos: círculo numerado en el color primario y línea vertical entre pasos. */
+.docs-steps {
+  counter-reset: docs-step;
+  margin-block: 1.75rem;
+}
+.docs-step {
+  counter-increment: docs-step;
+  position: relative;
+  padding-left: 3rem;
+  padding-bottom: 1.75rem;
+}
+.docs-step:last-child {
+  padding-bottom: 0.25rem;
+}
+.docs-step::before {
+  content: counter(docs-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  width: 1.875rem;
+  height: 1.875rem;
+  place-items: center;
+  border-radius: 9999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  box-shadow: 0 0 0 4px var(--background);
+}
+.docs-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: calc(0.9375rem - 0.5px);
+  top: 2.375rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background: var(--border);
+}
+.docs-step > :first-child {
+  margin-top: 0;
+}
+.docs-step > :where(h2, h3, h4):first-child {
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.875rem;
+}
+.docs-step > :last-child {
+  margin-bottom: 0;
+}
+
+/* Columnas: una en móvil, dos desde md. */
+.docs-columns {
+  @apply my-6 grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2;
+}
+.docs-column {
+  @apply min-w-0;
+}
+.docs-column > :first-child {
+  margin-top: 0;
+}
+.docs-column > :last-child {
+  margin-bottom: 0;
+}
+.docs-columns .docs-card {
+  margin-block: 0;
+  height: 100%;
+}
+
+/* Bloques de código */
+.docs-code pre {
+  @apply m-0 overflow-x-auto bg-transparent px-4 py-3.5 font-mono text-[0.8125rem] leading-6;
+  tab-size: 2;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+}
+.docs-code pre:focus-visible {
+  @apply outline-2 -outline-offset-2 outline-ring;
+}
+.docs-code code {
+  @apply bg-transparent p-0;
 }
