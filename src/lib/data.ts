@@ -125,6 +125,17 @@ export const getPageContent = cache(async (pageId: string) => {
   return { ...data, status: data.status as PageStatus }
 })
 
+export const getPageAttachments = cache(async (pageId: string) => {
+  const supabase = await getSupabase()
+  const { data, error } = await supabase
+    .from("attachments")
+    .select("id, file_name, mime_type, size_bytes, created_at")
+    .eq("page_id", pageId)
+    .order("created_at", { ascending: false })
+  if (error) throw toDbError(error)
+  return data
+})
+
 // ---------------------------------------------------------------------------
 // Administración (solo owner y admin pasan RLS en invitaciones y accesos)
 // ---------------------------------------------------------------------------
