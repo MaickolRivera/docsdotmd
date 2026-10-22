@@ -371,7 +371,7 @@ Contenido de la derecha.
       empty: "Arrastra o pega archivos en el editor, o usa el botón de adjuntar.",
       uploading: (name: string) => `Subiendo ${name}…`,
       uploaded: "Archivo adjuntado",
-      tooLarge: "El archivo supera el límite de 5 MB.",
+      tooLarge: "El archivo supera el límite de 4 MB.",
       typeNotAllowed: "Solo se permiten imágenes, PDF y archivos de texto.",
       insert: "Insertar en la página",
       delete: "Borrar adjunto",

@@ -6,7 +6,10 @@ import { updateSession } from "@/lib/supabase/middleware"
 // En Next.js 16 el antiguo middleware.ts se llama proxy.ts.
 export async function proxy(request: NextRequest) {
   const response = await updateSession(request)
-  response.headers.set("Content-Security-Policy", contentSecurityPolicy())
+  response.headers.set(
+    "Content-Security-Policy",
+    contentSecurityPolicy({ secure: request.nextUrl.protocol === "https:" }),
+  )
   return response
 }
 

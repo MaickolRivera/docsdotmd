@@ -20,8 +20,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   experimental: {
     serverActions: {
-      // Adjuntos de hasta 5 MB más el margen del multipart.
-      bodySizeLimit: "6mb",
+      // Adjuntos de hasta 4 MB más el margen del multipart.
+      bodySizeLimit: "5mb",
     },
   },
   turbopack: {

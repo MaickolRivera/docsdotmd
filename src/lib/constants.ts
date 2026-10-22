@@ -43,7 +43,11 @@ export const PAGE_CONTENT_MAX_LENGTH = 200_000
 export const INVITATION_TTL_DAYS = 7
 
 export const ATTACHMENTS_BUCKET = "attachments"
-export const ATTACHMENT_MAX_BYTES = 5 * 1024 * 1024
+/**
+ * 4 MB: el archivo viaja en el cuerpo de la Server Action y Vercel rechaza
+ * peticiones de más de 4,5 MB. La base y el bucket admiten hasta 5 MB.
+ */
+export const ATTACHMENT_MAX_BYTES = 4 * 1024 * 1024
 export const SIGNED_URL_TTL_SECONDS = 60
 
 /** Tipos permitidos para adjuntos (también configurados en el bucket). */

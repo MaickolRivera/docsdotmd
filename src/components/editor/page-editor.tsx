@@ -231,7 +231,14 @@ export function PageEditor({
       const formData = new FormData()
       formData.set("pageId", page.id)
       formData.set("file", file)
-      const result = await uploadAttachment(formData)
+      let result: Awaited<ReturnType<typeof uploadAttachment>>
+      try {
+        result = await uploadAttachment(formData)
+      } catch {
+        // La petición no llegó a la acción: sin conexión o rechazada por el servidor.
+        toast.error(`${file.name}: ${t.common.genericError}`, { id: toastId })
+        continue
+      }
       if (!result.ok) {
         toast.error(result.error, { id: toastId })
         continue

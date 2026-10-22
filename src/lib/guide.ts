@@ -214,7 +214,7 @@ Escriben en markdown con vista previa en vivo.
         id: "imagenes-y-archivos",
         title: "Imágenes y archivos",
         description:
-          "Pega o arrastra un archivo en el editor (imágenes, PDF o texto de hasta 5 MB), o usa **Adjuntar archivo**: se sube y el enlace se inserta solo. Los adjuntos son privados: solo los abre quien tiene acceso a la página.",
+          "Pega o arrastra un archivo en el editor (imágenes, PDF o texto de hasta 4 MB), o usa **Adjuntar archivo**: se sube y el enlace se inserta solo. Los adjuntos son privados: solo los abre quien tiene acceso a la página.",
         source: `![Diagrama de arquitectura](attachment:3f0c2a8e-1b7d-4c55-9a51-6c1f0e9d2b44)
 
 [Manual de operación (PDF)](attachment:8a6d4e1f-2c3b-4d5e-8f70-1a2b3c4d5e6f)`,

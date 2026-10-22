@@ -1,3 +1,8 @@
+# Proyecto único, no un monorepo. Sin "packages", Vercel puede tomarlo como
+# un monorepo vacío y fallar al instalar.
+packages:
+  - "."
+
 allowBuilds:
   sharp: false
   unrs-resolver: false
