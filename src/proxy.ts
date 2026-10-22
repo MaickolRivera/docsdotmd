@@ -1,10 +1,13 @@
 import type { NextRequest } from "next/server"
 
+import { contentSecurityPolicy } from "@/lib/security-headers"
 import { updateSession } from "@/lib/supabase/middleware"
 
 // En Next.js 16 el antiguo middleware.ts se llama proxy.ts.
 export async function proxy(request: NextRequest) {
-  return updateSession(request)
+  const response = await updateSession(request)
+  response.headers.set("Content-Security-Policy", contentSecurityPolicy())
+  return response
 }
 
 export const config = {
