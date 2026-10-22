@@ -3,12 +3,13 @@ import Link from "next/link"
 import { LogoMark } from "@/components/logo"
 import { ThemeToggle } from "@/components/theme-toggle"
 
+import { SearchDialog } from "./search-dialog"
 import { SpaceTabs, type SpaceTab } from "./space-tabs"
 import { UserMenu, type UserMenuOrg } from "./user-menu"
 
 /**
- * Header fijo: logo y nombre de la organización, tema y avatar. Debajo, las
- * pestañas de espacios.
+ * Header fijo: logo y nombre de la organización, buscador centrado (Ctrl+K),
+ * tema y avatar. Debajo, las pestañas de espacios.
  */
 export function OrgHeader({
   org,
@@ -30,7 +31,9 @@ export function OrgHeader({
           <LogoMark />
           <span className="truncate font-semibold tracking-tight">{org.name}</span>
         </Link>
-        <div className="min-w-0 flex-1" />
+        <div className="flex min-w-0 flex-1 justify-end md:justify-center">
+          <SearchDialog orgId={org.id} orgSlug={org.slug} />
+        </div>
         <div className="flex shrink-0 items-center gap-1 md:w-60 md:justify-end">
           <ThemeToggle />
           <UserMenu

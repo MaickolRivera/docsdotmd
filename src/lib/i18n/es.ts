@@ -195,6 +195,16 @@ export const es = {
     spaces: "Espacios",
   },
 
+  search: {
+    placeholder: "Buscar en la documentación…",
+    hint: "Escribe para buscar en todos los espacios a los que tienes acceso.",
+    empty: (query: string) => `Sin resultados para «${query}».`,
+    loading: "Buscando…",
+    error: "No se pudo completar la búsqueda.",
+    navigate: "para navegar",
+    open: "para abrir",
+  },
+
   sidebar: {
     label: "Páginas del espacio",
     newPage: "Página",
