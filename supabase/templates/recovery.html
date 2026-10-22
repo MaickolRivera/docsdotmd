@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <body
+    style="
+      margin: 0;
+      padding: 24px;
+      background: #f4f4f5;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #18181b;
+    "
+  >
+    <table
+      role="presentation"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      style="
+        max-width: 480px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 32px;
+      "
+    >
+      <tr>
+        <td>
+          <p style="margin: 0 0 16px; font-size: 20px; font-weight: bold">DOCSmd</p>
+          <p style="margin: 0 0 16px; font-size: 16px">
+            Recibimos una solicitud para restablecer tu contraseña.
+          </p>
+          <p style="margin: 0 0 24px">
+            <a
+              href="{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=recovery"
+              style="
+                display: inline-block;
+                background: #625240;
+                color: #f7f1e5;
+                text-decoration: none;
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-weight: bold;
+              "
+            >
+              Crear contraseña nueva
+            </a>
+          </p>
+          <p style="margin: 0; font-size: 13px; color: #71717a">
+            Si no la pediste, ignora este correo: tu contraseña no cambiará.
+          </p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
