@@ -244,6 +244,15 @@ otp_expiry = 3600
 # admin_email = "admin@email.com"
 # sender_name = "Admin"
 
+# Plantillas en español. Usan token_hash para que el enlace funcione aunque se abra en otro navegador.
+[auth.email.template.confirmation]
+subject = "Confirma tu cuenta de DOCSmd"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Restablece tu contraseña de DOCSmd"
+content_path = "./supabase/templates/recovery.html"
+
 # Uncomment to customize email template
 # [auth.email.template.invite]
 # subject = "You have been invited"
