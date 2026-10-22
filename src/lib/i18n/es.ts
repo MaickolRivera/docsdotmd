@@ -195,6 +195,20 @@ export const es = {
     spaces: "Espacios",
   },
 
+  sidebar: {
+    label: "Páginas del espacio",
+    newPage: "Página",
+    newSubpage: "Agregar subpágina",
+    reorder: "Ordenar",
+    doneReordering: "Listo",
+    moveUp: "Subir",
+    moveDown: "Bajar",
+    empty: "Este espacio aún no tiene páginas.",
+    mobileTrigger: "Páginas",
+    expand: "Expandir",
+    collapse: "Contraer",
+  },
+
   reader: {
     breadcrumb: "Ruta de navegación",
     onThisPage: "En esta página",
