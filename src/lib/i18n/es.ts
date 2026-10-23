@@ -113,40 +113,30 @@ export const es = {
 
   landing: {
     nav: {
-      label: "Secciones",
-      demo: "Demo",
-      features: "Funciones",
       guide: "Guía",
     },
-    badgeNew: "Nuevo",
     badge: "Guía de componentes e iconos",
-    title: "La documentación de tu equipo, clara y",
-    titleAccent: "en un solo lugar.",
+    title: "DOCS",
+    titleAccent: "dotmd",
     subtitle:
-      "Escribe en markdown con pasos, pestañas de código, avisos y acordeones. Organiza por espacios y decide quién ve cada uno.",
+      "Escribe en markdown con componentes interactivos y organiza tus espacios!",
     ctaPrimary: "Crear cuenta",
     ctaSecondary: "Iniciar sesión",
-    ctaGuide: "Ver la guía",
     demo: {
       label: "Demo interactiva de DOCSdotmd",
-      hint: "Es interactiva: cambia de espacio y de página.",
+      hint: "Demo interactiva; cambia de espacio y de página.",
       org: "Acme",
       initials: "AM",
       pages: "Páginas del espacio",
     },
-    featuresTitle: "Todo lo que tu equipo necesita",
+    featuresTitle: "Lo que tu equipo necesita",
     featuresSubtitle:
-      "Escribe, organiza y comparte la documentación con los permisos correctos desde el primer día.",
+      "Escribe, organiza y comparte la documentación desde el primer día.",
     features: [
       {
         icon: "file-text",
         title: "Markdown con componentes",
         text: "Pasos, pestañas de código, avisos, tarjetas y acordeones con directivas simples. Sin HTML ni código ejecutable.",
-      },
-      {
-        icon: "shield-check",
-        title: "Acceso por organización",
-        text: "Cada organización ve solo lo suyo. Roles, grupos y espacios restringidos protegidos en la base de datos.",
       },
       {
         icon: "search",
@@ -157,6 +147,11 @@ export const es = {
         icon: "paperclip",
         title: "Archivos privados",
         text: "Imágenes y PDF guardados en privado y servidos con enlaces que caducan en segundos.",
+      },
+      {
+        icon: "shield-check",
+        title: "Acceso por organización",
+        text: "Cada organización ve sus propios roles, grupos y espacios restringidos.",
       },
     ],
     footer: "Desarrollado con ♥ por ",

@@ -6,11 +6,11 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { t } from "@/lib/i18n"
 
-/** Alterna entre tema claro y oscuro. */
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   return (
     <Button
+      className="cursor-pointer rounded-full"
       variant="ghost"
       size="icon"
       aria-label={t.header.toggleTheme}
