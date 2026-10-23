@@ -1,8 +1,6 @@
 import type { IconName } from "@/lib/icons"
 
-// Contenido de la demo de la landing: una organización ficticia ("Acme") con
-// espacios y páginas escritas con los mismos componentes que la app. Los
-// enlaces `#demo-<id>` abren otra página dentro de la demo.
+// Contenido de la demo de la landing: una organización ficticia ("Acme")
 
 export type DemoSpace = {
   id: string
@@ -24,7 +22,6 @@ export const DEMO_LINK_PREFIX = "#demo-"
 
 export const DEMO_SPACES: DemoSpace[] = [
   { id: "docs", name: "Documentación", icon: "book-open" },
-  { id: "api", name: "API Reference", icon: "code" },
   { id: "changelog", name: "Changelog", icon: "history" },
   { id: "interno", name: "Interno", icon: "lock" },
 ]
@@ -148,40 +145,6 @@ Guárdala en variables de entorno, nunca en el código que corre en el navegador
 - [x] Enlaces de pago con vencimiento
 - [ ] Pagos recurrentes
 - [ ] Reportes descargables`,
-  },
-  {
-    id: "crear-un-pago",
-    spaceId: "api",
-    title: "Crear un pago",
-    source: `\`POST /v1/pagos\` crea un cobro y devuelve su estado.
-
-| Campo | Tipo | Descripción |
-| --- | --- | --- |
-| \`monto\` | entero | Valor en la moneda indicada |
-| \`moneda\` | texto | Código ISO, por ejemplo \`COP\` |
-| \`descripcion\` | texto | Opcional, aparece en el recibo |
-
-~~~json title="Respuesta 201"
-{
-  "id": "pay_8f2k1",
-  "estado": "aprobado",
-  "monto": 25000
-}
-~~~`,
-  },
-  {
-    id: "webhooks",
-    spaceId: "api",
-    title: "Webhooks",
-    source: `Recibe un \`POST\` en tu servidor cada vez que cambia el estado de un pago.
-
-:::steps
-### Registra la URL
-En **Ajustes → Webhooks**, agrega la dirección de tu servidor.
-
-### Verifica la firma
-Compara el encabezado \`Acme-Signature\` con tu secreto antes de procesar el evento.
-:::`,
   },
   {
     id: "octubre-2026",

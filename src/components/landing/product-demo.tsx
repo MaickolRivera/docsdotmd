@@ -1,31 +1,20 @@
 "use client"
 
-import { ChevronRight, Moon, Search, Settings, Sun } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import { useRef, useState, type ReactNode } from "react"
-
-import { LogoMark } from "@/components/logo"
 import { Badge } from "@/components/ui/badge"
-import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { t } from "@/lib/i18n"
 import { DEMO_LINK_PREFIX, type DemoPage, type DemoSpace } from "@/lib/landing-demo"
 import type { TocItem } from "@/lib/markdown/toc"
 import { cn } from "@/lib/utils"
 
-/** El icono llega ya renderizado: así el registro de iconos no viaja al navegador. */
 export type ProductDemoSpace = Omit<DemoSpace, "icon"> & { icon: ReactNode }
 
 export type ProductDemoPage = Omit<DemoPage, "source"> & {
   toc: TocItem[]
-  /** Contenido ya renderizado en el servidor con DocsMarkdown. */
   content: ReactNode
 }
 
-/**
- * Simulación de la app dentro del marco de ventana de la landing: header,
- * pestañas de espacios, barra lateral, contenido e índice. Cambia de espacio y
- * de página sin navegar; el contenido usa los mismos componentes que las
- * páginas reales y la barra de direcciones sigue a la página abierta.
- */
 export function ProductDemo({
   spaces,
   pages,
@@ -103,7 +92,7 @@ export function ProductDemo({
         onClick={() => open(item.id)}
         aria-current={active ? "page" : undefined}
         className={cn(
-          "flex w-full items-center gap-1 rounded-md pr-1 text-left text-[13px] transition-colors",
+          "flex w-full items-center gap-1 rounded-md pr-1 text-left text-xs pt-1 transition-colors cursor-pointer",
           active
             ? "bg-primary/10 font-medium text-primary"
             : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -123,7 +112,7 @@ export function ProductDemo({
   }
 
   return (
-    <div className="rounded-2xl border bg-card/60 p-2 pt-0 shadow-2xl shadow-primary/5 backdrop-blur">
+    <div className="rounded-2xl border bg-card/60 p-2 pt-0 shadow-2xl shadow-primary/5 backdrop-blur w-full">
       <div aria-hidden className="flex items-center gap-1.5 px-2 py-3">
         <span className="size-2.5 rounded-full bg-red-400/70" />
         <span className="size-2.5 rounded-full bg-amber-400/70" />
@@ -132,64 +121,31 @@ export function ProductDemo({
           docsdotmd.vercel.app/acme/{path}
         </span>
       </div>
-      <div className="flex h-[520px] flex-col overflow-hidden rounded-xl border bg-background text-left shadow-sm md:h-[600px]">
-        {/* Header de la organización (decorativo) */}
-        <div aria-hidden className="flex h-12 shrink-0 items-center gap-3 border-b px-4">
-          <span className="flex min-w-0 items-center gap-2 md:w-52">
-            <LogoMark className="size-6" />
-            <span className="truncate text-sm font-semibold tracking-tight">
-              {t.landing.demo.org}
-            </span>
-          </span>
-          <span className="mx-auto hidden h-8 w-full max-w-xs items-center gap-2 rounded-full border bg-muted/40 px-3 text-xs text-muted-foreground sm:flex">
-            <Search className="size-3.5" />
-            <span className="flex-1">{t.header.search}</span>
-            <KbdGroup>
-              <Kbd>Ctrl</Kbd>
-              <Kbd>K</Kbd>
-            </KbdGroup>
-          </span>
-          <span className="ml-auto flex items-center gap-3 sm:ml-0 md:w-52 md:justify-end">
-            <Sun className="hidden size-4 text-muted-foreground dark:block" />
-            <Moon className="size-4 text-muted-foreground dark:hidden" />
-            <span className="flex size-7 items-center justify-center rounded-full bg-primary/15 text-[10px] font-semibold text-primary">
-              {t.landing.demo.initials}
-            </span>
-          </span>
-        </div>
+      <div className="flex h-130 flex-col overflow-hidden rounded-xl border bg-background text-left shadow-sm md:h-160">
 
         {/* Pestañas de espacios */}
-        <div className="flex h-10 shrink-0 items-center gap-5 border-b px-4">
-          <div className="-mb-px flex min-w-0 flex-1 [scrollbar-width:none] items-center gap-5 overflow-x-auto">
-            {spaces.map((item) => {
-              const selected = item.id === space.id
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => openSpace(item.id)}
-                  aria-current={selected ? "page" : undefined}
-                  className={cn(
-                    "relative flex h-10 shrink-0 items-center gap-1.5 px-0.5 text-[13px] font-medium whitespace-nowrap transition-colors",
-                    "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-full",
-                    selected
-                      ? "text-primary after:bg-primary"
-                      : "text-muted-foreground after:bg-transparent hover:text-foreground",
-                  )}
-                >
-                  {item.icon}
-                  {item.name}
-                </button>
-              )
-            })}
-          </div>
-          <span
-            aria-hidden
-            className="hidden shrink-0 items-center gap-1.5 text-[13px] font-medium text-muted-foreground md:flex"
-          >
-            <Settings className="size-3.5" />
-            {t.header.settings}
-          </span>
+        <div className="flex min-w-0 scrollbar-none items-center gap-5 border-b px-4 h-10">
+          {spaces.map((item) => {
+            const selected = item.id === space.id
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => openSpace(item.id)}
+                aria-current={selected ? "page" : undefined}
+                className={cn(
+                  "relative flex h-10 shrink-0 items-center gap-1.5 text-xs whitespace-nowrap transition-colors cursor-pointer",
+                  "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-full",
+                  selected
+                    ? "text-primary after:bg-primary"
+                    : "text-muted-foreground after:bg-transparent hover:text-foreground",
+                )}
+              >
+                {item.icon}
+                {item.name}
+              </button>
+            )
+          })}
         </div>
 
         <div className="flex min-h-0 flex-1">
@@ -198,17 +154,17 @@ export function ProductDemo({
             aria-label={t.landing.demo.pages}
             className="hidden w-52 shrink-0 overflow-y-auto border-r px-3 py-5 md:block"
           >
-            <p className="mb-2 px-2 text-[11px] font-semibold tracking-wide text-foreground uppercase">
+            <p className="mb-2 px-2 text-xs font-semibold tracking-wide text-foreground uppercase">
               {space.name}
             </p>
-            <ul className="flex flex-col gap-0.5">
+            <ul className="flex flex-col gap-1">
               {topLevel.map((item) => {
                 const children = spacePages.filter((child) => child.parentId === item.id)
                 return (
                   <li key={item.id}>
                     {pageItem(item, children.length > 0)}
                     {children.length ? (
-                      <ul className="ml-3 flex flex-col gap-0.5 border-l pl-1.5">
+                      <ul className="ml-3 mt-1 flex flex-col gap-1 border-l pl-1">
                         {children.map((child) => (
                           <li key={child.id}>{pageItem(child, false)}</li>
                         ))}
@@ -222,7 +178,7 @@ export function ProductDemo({
 
           <div className="flex min-w-0 flex-1 flex-col">
             {/* En móvil, las páginas del espacio como fichas */}
-            <div className="flex shrink-0 [scrollbar-width:none] gap-1.5 overflow-x-auto border-b px-3 py-2 md:hidden">
+            <div className="flex shrink-0 scrollbar-none gap-1.5 overflow-x-auto border-b px-3 py-2 md:hidden">
               {spacePages.map((item) => (
                 <button
                   key={item.id}
@@ -252,7 +208,7 @@ export function ProductDemo({
                   key={item.id}
                   data-demo-page={item.id}
                   hidden={item.id !== page.id}
-                  className="mx-auto max-w-[680px] px-5 pt-7 pb-12 sm:px-8"
+                  className="mx-auto max-w-170 px-5 pt-7 pb-12 sm:px-8"
                 >
                   <p className="mb-3 text-[13px] font-medium text-primary">
                     {spaces.find((entry) => entry.id === item.spaceId)?.name}
@@ -271,10 +227,10 @@ export function ProductDemo({
           </div>
 
           {/* En esta página */}
-          <aside className="hidden w-48 shrink-0 overflow-y-auto py-7 pr-4 pl-1 xl:block">
+          <aside className="hidden w-48 shrink-0 overflow-y-auto py-7 px-4 xl:block">
             {page.toc.length ? (
-              <nav aria-label={t.reader.onThisPage} className="text-[13px]">
-                <p className="mb-3 text-[11px] font-semibold tracking-wide text-foreground uppercase">
+              <nav aria-label={t.reader.onThisPage} className="text-xs">
+                <p className="mb-3 text-xs font-semibold tracking-wide text-foreground uppercase">
                   {t.reader.onThisPage}
                 </p>
                 <ul className="flex flex-col gap-1.5 border-l">

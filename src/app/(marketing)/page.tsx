@@ -44,7 +44,7 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-1">
-        <section className="mx-auto flex max-w-4xl flex-col items-center px-4 pt-16 pb-14 text-center md:py-20">
+        <section className="mx-auto flex max-w-4xl flex-col items-center px-4 pt-16 pb-14 text-center md:py-18">
           <Link
             href="/guia"
             className="group inline-flex items-center gap-2 rounded-full border bg-background py-1 px-3 text-sm shadow-xs transition-colors hover:bg-muted/60"
@@ -65,8 +65,8 @@ export default function LandingPage() {
         </section>
 
         <section id="demo" aria-label={t.landing.demo.label} className="mx-auto max-w-6xl px-4 flex flex-col items-center">
-          <p className="mb-3 border-b max-w-6xl text-center text-xs text-muted-foreground">{t.landing.demo.hint}</p>
           <ProductDemo spaces={demoSpaces} pages={demoPages} />
+          <p className="mt-4 max-w-6xl text-center text-xs text-muted-foreground">{t.landing.demo.hint}</p>
         </section>
 
         <section id="funciones" className="mx-auto max-w-6xl px-4 py-40">

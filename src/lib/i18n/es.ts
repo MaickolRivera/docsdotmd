@@ -124,7 +124,7 @@ export const es = {
     ctaSecondary: "Iniciar sesión",
     demo: {
       label: "Demo interactiva de DOCSdotmd",
-      hint: "Demo interactiva; cambia de espacio y de página.",
+      hint: "Demo interactiva.",
       org: "Acme",
       initials: "AM",
       pages: "Páginas del espacio",
@@ -233,7 +233,7 @@ export const es = {
 
   reader: {
     breadcrumb: "Ruta de navegación",
-    onThisPage: "En esta página",
+    onThisPage: "CONTENIDO",
     editPage: "Editar página",
     previous: "Anterior",
     next: "Siguiente",
