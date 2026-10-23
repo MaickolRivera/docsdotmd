@@ -159,7 +159,7 @@ export const es = {
         text: "Imágenes y PDF guardados en privado y servidos con enlaces que caducan en segundos.",
       },
     ],
-    footer: "Hecho con Next.js y Supabase.",
+    footer: "Desarrollado con ♥ por ",
   },
 
   orgs: {

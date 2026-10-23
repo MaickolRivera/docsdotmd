@@ -121,7 +121,10 @@ export default function LandingPage() {
       <footer className="border-t">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 text-sm text-muted-foreground">
           <Logo className="text-foreground" />
-          <span>{t.landing.footer}</span>
+          <div>
+            <span>{t.landing.footer}</span>
+            <span className="text-primary"><a target="_blank" href="https://www.maickolrivera.me/" rel="noopener noreferrer">Maickol Rivera</a></span>
+          </div>
         </div>
       </footer>
     </div>

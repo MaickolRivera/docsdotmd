@@ -1,25 +1,20 @@
 import { cn } from "@/lib/utils"
 
-/**
- * Marca de DOCSdotmd: hoja con esquina doblada, en blanco sobre negro. Es el mismo
- * dibujo que src/app/icon.svg (el favicon), sin máscara para no repetir IDs
- * cuando el logo aparece varias veces en la página.
- */
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 512 512" aria-hidden className={cn("size-7 shrink-0", className)}>
-      <rect width="512" height="512" fill="#000" />
-      <g
-        fill="none"
-        stroke="#fff"
-        strokeWidth="19.4739"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M295.909 145V308.567H160" />
-        <path d="M157.656 142H285.704C295.688 142 303.675 145.5 309.666 152.499L347.5 191C232 300 355.344 210.022 355.344 218.771V351.315C355.344 364.438 370.32 371 355.344 371H157.656C142.68 371 157.656 364.438 157.656 351.315V161.685C157.656 148.562 142.68 142 157.656 142Z" />
+    <svg viewBox="0 0 512 512" fill="none" aria-hidden className={cn("size-5 shrink-0", className)} xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#clip0_17_13)">
+        <path d="M512 0H0V512H512V0Z" fill="#FAFAFB"/>
+        <path d="M165.656 141H293.704C331.811 141 363.344 171.892 363.344 210V370H165.656C150.68 370 165.656 363.438 165.656 350.315V160.685C165.656 147.561 150.68 141 165.656 141Z" strokeWidth="30" strokeLinecap="round" strokeLinejoin="round" stroke="#151A1D"/>
+        <path d="M257.553 365C528.139 204.485 188.192 430.371 224.794 154" strokeWidth="30" strokeLinecap="square" strokeLinejoin="round" stroke="#151A1D"/>
       </g>
+      <defs>
+        <clipPath id="clip0_17_13">
+        <rect width="512" height="512" rx="256" fill="white"/>
+        </clipPath>
+      </defs>
     </svg>
+
   )
 }
 
