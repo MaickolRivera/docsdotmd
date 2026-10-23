@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 
 /**
- * Marca de DOCSmd: hoja con esquina doblada, en blanco sobre negro. Es el mismo
+ * Marca de DOCSdotmd: hoja con esquina doblada, en blanco sobre negro. Es el mismo
  * dibujo que src/app/icon.svg (el favicon), sin máscara para no repetir IDs
  * cuando el logo aparece varias veces en la página.
  */
@@ -28,7 +28,7 @@ export function Logo({ className }: { className?: string }) {
     <span className={cn("inline-flex items-center gap-2 font-semibold tracking-tight", className)}>
       <LogoMark />
       <span>
-        DOCS<span className="text-primary">md</span>
+        DOCS<span className="text-primary">dotmd</span>
       </span>
     </span>
   )

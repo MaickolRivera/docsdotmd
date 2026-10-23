@@ -1,7 +1,7 @@
 import { defaultSchema, type Options as SanitizeSchema } from "rehype-sanitize"
 
 // Esquema de rehype-sanitize: el de GitHub (sin HTML peligroso ni enlaces
-// javascript:) más los componentes de DOCSmd con sus atributos permitidos.
+// javascript:) más los componentes de DOCSdotmd con sus atributos permitidos.
 // El markdown no admite HTML crudo: react-markdown lo muestra como texto y
 // este esquema descarta cualquier otro elemento.
 

@@ -3,12 +3,12 @@
 
 export const es = {
   meta: {
-    title: "DOCSmd",
+    title: "DOCSdotmd",
     description: "Documentación privada para tu equipo, escrita en markdown con componentes.",
   },
 
   common: {
-    appName: "DOCSmd",
+    appName: "DOCSdotmd",
     save: "Guardar",
     saving: "Guardando…",
     cancel: "Cancelar",
@@ -128,7 +128,7 @@ export const es = {
     ctaSecondary: "Iniciar sesión",
     ctaGuide: "Ver la guía",
     demo: {
-      label: "Demo interactiva de DOCSmd",
+      label: "Demo interactiva de DOCSdotmd",
       hint: "Es interactiva: cambia de espacio y de página.",
       org: "Acme",
       initials: "AM",
@@ -522,7 +522,7 @@ Contenido de la derecha.
   guide: {
     title: "Guía de componentes",
     description:
-      "Cómo escribir una página en DOCSmd: cada componente con su sintaxis y cómo se ve, y la lista de iconos disponibles.",
+      "Cómo escribir una página en DOCSdotmd: cada componente con su sintaxis y cómo se ve, y la lista de iconos disponibles.",
     lead: "Todo lo que puedes usar al escribir una página, con su sintaxis y cómo se ve. Copia cualquier ejemplo y pégalo en el editor.",
     result: "Resultado",
     viewSource: "Ver el markdown de esta sección",

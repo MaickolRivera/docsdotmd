@@ -26,7 +26,7 @@ export async function sendInvitationEmail(params: {
   if (!apiKey || !from) return false
 
   const html = `<!doctype html><html lang="es"><body style="font-family:Arial,Helvetica,sans-serif;color:#18181b">
-<p style="font-size:18px;font-weight:bold">DOCSmd</p>
+<p style="font-size:18px;font-weight:bold">DOCSdotmd</p>
 <p>${escapeHtml(t.invitation.description(params.orgName, params.role))}</p>
 <p><a href="${escapeHtml(params.link)}" style="display:inline-block;background:#625240;color:#f7f1e5;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold">${escapeHtml(t.invitation.accept)}</a></p>
 <p style="font-size:13px;color:#71717a">El enlace vence en 7 días y solo funciona con este correo.</p>
@@ -39,7 +39,7 @@ export async function sendInvitationEmail(params: {
       body: JSON.stringify({
         from,
         to: [params.to],
-        subject: `Te invitaron a ${params.orgName} en DOCSmd`.replace(/[\r\n]/g, " "),
+        subject: `Te invitaron a ${params.orgName} en DOCSdotmd`.replace(/[\r\n]/g, " "),
         html,
       }),
     })

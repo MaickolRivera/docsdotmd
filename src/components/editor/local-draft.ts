@@ -10,7 +10,15 @@ export type EditorFields = {
 
 export type LocalDraft = EditorFields & { savedAt: number }
 
-const key = (pageId: string) => `docsmd:draft:${pageId}`
+const key = (pageId: string) => `docsdotmd:draft:${pageId}`
+// Clave con el nombre anterior del proyecto: los borradores guardados antes del
+// cambio se siguen leyendo.
+const oldKey = (pageId: string) => `docsmd:draft:${pageId}`
+
+function removeDraft(pageId: string) {
+  localStorage.removeItem(key(pageId))
+  localStorage.removeItem(oldKey(pageId))
+}
 
 export function sameFields(a: EditorFields, b: EditorFields) {
   return (
@@ -29,7 +37,7 @@ export function readLocalDraft(
   savedAt: string,
 ): LocalDraft | null {
   try {
-    const raw = localStorage.getItem(key(pageId))
+    const raw = localStorage.getItem(key(pageId)) ?? localStorage.getItem(oldKey(pageId))
     if (!raw) return null
     const draft = JSON.parse(raw) as Partial<LocalDraft>
     const valid =
@@ -42,7 +50,7 @@ export function readLocalDraft(
     if (!valid) return null
     const parsed = draft as LocalDraft
     if (parsed.savedAt <= Date.parse(savedAt) || sameFields(parsed, saved)) {
-      localStorage.removeItem(key(pageId))
+      removeDraft(pageId)
       return null
     }
     return parsed
@@ -61,7 +69,7 @@ export function writeLocalDraft(pageId: string, fields: EditorFields) {
 
 export function clearLocalDraft(pageId: string) {
   try {
-    localStorage.removeItem(key(pageId))
+    removeDraft(pageId)
   } catch {
     // Igual que arriba.
   }

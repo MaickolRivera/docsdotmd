@@ -1,6 +1,8 @@
-# DOCSmd
+# DOCSdotmd
 
 Plataforma de documentación privada tipo GitBook/Mintlify: cada **organización** tiene **espacios** (pestañas) con **páginas en markdown** y componentes visuales. Solo los miembros autorizados entran; los permisos viven en Postgres con RLS.
+
+**Demo:** [docsdotmd.vercel.app](https://docsdotmd.vercel.app) (entra con los usuarios de demo de más abajo).
 
 ![Lector](docs/screenshots/lector-oscuro.png)
 

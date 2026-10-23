@@ -64,7 +64,7 @@ export const GUIDE_SECTIONS: GuideSection[] = [
   {
     id: "componentes",
     title: "Componentes",
-    intro: `Los componentes son bloques que empiezan con \`:::nombre\` y terminan con \`:::\` (también valen más dos puntos, como \`::::\`). Se pueden anidar, por ejemplo un aviso dentro de un paso o tarjetas dentro de columnas, sin contar los dos puntos: DOCSmd ajusta los contenedores por ti.`,
+    intro: `Los componentes son bloques que empiezan con \`:::nombre\` y terminan con \`:::\` (también valen más dos puntos, como \`::::\`). Se pueden anidar, por ejemplo un aviso dentro de un paso o tarjetas dentro de columnas, sin contar los dos puntos: DOCSdotmd ajusta los contenedores por ti.`,
     examples: [
       {
         id: "pasos",

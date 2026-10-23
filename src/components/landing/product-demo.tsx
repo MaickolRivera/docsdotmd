@@ -128,7 +128,9 @@ export function ProductDemo({
         <span className="size-2.5 rounded-full bg-red-400/70" />
         <span className="size-2.5 rounded-full bg-amber-400/70" />
         <span className="size-2.5 rounded-full bg-emerald-400/70" />
-        <span className="ml-3 truncate text-xs text-muted-foreground">docsmd.app/acme/{path}</span>
+        <span className="ml-3 truncate text-xs text-muted-foreground">
+          docsdotmd.vercel.app/acme/{path}
+        </span>
       </div>
       <div className="flex h-[520px] flex-col overflow-hidden rounded-xl border bg-background text-left shadow-sm md:h-[600px]">
         {/* Header de la organización (decorativo) */}
