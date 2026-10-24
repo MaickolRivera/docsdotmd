@@ -1,15 +1,14 @@
 # DOCSdotmd
 
-Plataforma de documentación privada tipo GitBook/Mintlify: cada **organización** tiene **espacios** (pestañas) con **páginas en markdown** y componentes visuales. Solo los miembros autorizados entran; los permisos viven en Postgres con RLS.
+Plataforma de documentación privada y modular. Con un editor en Markdown enriquecido con componentes visuales interactivos. Organiza el conocimiento por espacios y páginas con acceso estrictamente privado, respaldado por una arquitectura de seguridad robusta con Row-Level Security (RLS).
 
-🌐 **Demo en vivo:** [docsdotmd.vercel.app](https://docsdotmd.vercel.app) (entra con los [usuarios de demo](#-usuarios-de-demo))
-🌍 **Idioma:** español
+🌐 **Demo en vivo:** [docsdotmd.vercel.app](https://docsdotmd.vercel.app)
 
 ![Vista previa de DOCSdotmd](public/docsdotmd_preview.webp)
 
 ---
 
-## ✨ Características
+## Características
 
 - **Organizaciones y espacios**: cada organización agrupa su documentación en espacios (pestañas), con visibilidad para toda la organización o solo para ciertos grupos.
 - **Roles y permisos** (owner, admin, editor, lector) aplicados en la base de datos con Row Level Security: un acceso no autorizado responde **404 real**.
@@ -21,7 +20,7 @@ Plataforma de documentación privada tipo GitBook/Mintlify: cada **organización
 - **Guía pública** en `/guia` con cada componente, su markdown, su resultado y todos los iconos.
 - Interfaz responsive, con tema claro y oscuro.
 
-## 🛠️ Stack
+## Stack
 
 - [Next.js 16](https://nextjs.org/) (App Router) + [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) estricto
 - [Tailwind CSS 4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) + typography
@@ -32,7 +31,7 @@ Plataforma de documentación privada tipo GitBook/Mintlify: cada **organización
 - [Playwright](https://playwright.dev/) para pruebas unitarias del renderizador y e2e
 - Gestor de paquetes: [pnpm](https://pnpm.io/)
 
-## 🚀 Puesta en marcha
+## Como empezar
 
 ### Instalación
 
@@ -63,18 +62,7 @@ pnpm test:unit    # Pruebas del renderizador de markdown
 pnpm test:e2e     # Pruebas e2e (requieren Supabase local; en CI corren con supabase start)
 ```
 
-## 👤 Usuarios de demo
-
-Definidos en `supabase/seed.sql`. Contraseña: `Demo-DOCSmd-2026`.
-
-| Usuario          | Rol                                                                        |
-| ---------------- | -------------------------------------------------------------------------- |
-| ana@acme.test    | owner de Acme                                                              |
-| eva@acme.test    | editora de Acme, grupo Ingeniería (edita el espacio restringido "Interno") |
-| leo@acme.test    | lector de Acme                                                             |
-| gina@globex.test | owner de Globex (grupo Finanzas)                                           |
-
-## 📁 Estructura del proyecto
+## Estructura del proyecto
 
 ```
 src/
@@ -100,15 +88,7 @@ supabase/
 tests/                 # unit (renderizador) y e2e
 ```
 
-## 🌐 Despliegue en Vercel
-
-1. En Vercel → **Add New → Project** importa el repositorio. Next.js y pnpm se detectan solos (la versión de pnpm sale de `packageManager` y la de Node de `engines`); no cambies los comandos.
-2. En **Environment Variables** agrega `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` para Production y Preview antes del primer deploy (las `NEXT_PUBLIC_` quedan fijas al compilar: si las cambias, vuelve a desplegar). Opcionales: `RESEND_API_KEY` y `EMAIL_FROM` para enviar las invitaciones por correo, `NEXT_PUBLIC_CONTACT_EMAIL` para el canal de contacto de la política de datos y `NEXT_PUBLIC_SITE_URL` solo si usas un dominio propio (sin ella, producción usa el dominio del proyecto). `SUPABASE_SERVICE_ROLE_KEY` nunca va en Vercel.
-3. **Deploy.** Las funciones corren en `iad1` (`vercel.json`), la región de Vercel más cercana a Supabase `us-east-1`. Cada página hace varias consultas seguidas a Supabase: en la misma región tardan milisegundos en vez de ~200 ms. Si tu proyecto de Supabase está en otra región (Supabase → Project Settings → General), cambia `regions`.
-4. En Supabase → Authentication → URL Configuration pon como **Site URL** la URL de producción (`https://<proyecto>.vercel.app`) y en **Redirect URLs** agrega `https://<proyecto>.vercel.app/**` y, para las vistas previas, `https://*-<tu-equipo>.vercel.app/**`. Sin esto, los enlaces de los correos de confirmación y recuperación no funcionan.
-5. En GitHub → Settings → Secrets and variables → Actions crea `SUPABASE_URL` y `SUPABASE_ANON_KEY` para el keep-alive.
-
-## 🧩 Componentes de markdown
+## Componentes de markdown
 
 | Componente         | Sintaxis                                                                       |
 | ------------------ | ------------------------------------------------------------------------------ |
@@ -123,25 +103,14 @@ tests/                 # unit (renderizador) y e2e
 
 Los contenedores se pueden anidar escribiendo siempre `:::`: el renderizador ajusta los dos puntos. No se permite HTML crudo ni `javascript:`.
 
-## 🧭 Decisiones de diseño
-
-- **Cache Components desactivado:** toda la app depende de la sesión y los accesos no autorizados deben responder **404 real**; con streaming el estado queda en 200.
-- `group_members` y `space_groups` llevan `org_id`, con claves foráneas compuestas para que nunca se mezclen organizaciones. `profiles` guarda una copia del correo.
-- Los adjuntos se sirven por `/api/adjuntos/[id]`, que valida permisos y redirige a un enlace firmado de 60 s (los PDF no caducan en la página abierta).
-- **Adjuntos de hasta 4 MB:** el archivo viaja en el cuerpo de la Server Action y Vercel rechaza peticiones de más de 4,5 MB. La base y el bucket siguen admitiendo 5 MB.
-- Las invitaciones se envían con Resend si hay `RESEND_API_KEY`; si no, el enlace se muestra para copiarlo.
-- Ordenar páginas: flechas subir/bajar y cambio de página padre en el editor.
-- **Identidad:** logo propio (`src/app/icon.svg`, también como favicon), tipografía **Onest** y color primario **hueso**: `#e6ddcc` en el tema oscuro y un hueso tostado `#625240` en el claro, porque el hueso no se lee sobre blanco. Los enlaces del contenido van subrayados para no depender solo del color.
-- `src/types/database.ts` tiene el formato de `supabase gen types`; regéneralo al conectar el proyecto.
-
-## 🔒 Seguridad y privacidad
+## Seguridad y privacidad
 
 - RLS activo en todas las tablas, sin acceso anónimo y con columnas editables acotadas.
 - Bucket de adjuntos privado, con política de acceso por organización y página.
 - Markdown sin HTML crudo, CSP y cabeceras de protección.
 - Política de datos (`/privacidad`) y términos de uso (`/terminos`) con aceptación explícita al registrarse. Son una base redactada con asistencia de IA, no asesoría jurídica: que un abogado los revise antes de lanzar con usuarios reales.
 
-## 🤝 Contribuir
+## Contribuir
 
 ¡Las contribuciones son bienvenidas! Si quieres añadir componentes de markdown, mejorar el editor o proponer funciones, abre un issue o envía un pull request.
 

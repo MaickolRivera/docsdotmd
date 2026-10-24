@@ -169,7 +169,6 @@ export function privacyDocument(): LegalDocument {
 }
 
 export function termsDocument(): LegalDocument {
-  const contact = contactChannel()
   return {
     title: "Términos de uso",
     description:
