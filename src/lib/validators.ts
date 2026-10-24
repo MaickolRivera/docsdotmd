@@ -85,6 +85,10 @@ export const orgFormSchema = z.object({
 })
 export type OrgFormInput = z.infer<typeof orgFormSchema>
 
+/** Crear una organización solo pide el nombre; el slug se deriva de él. */
+export const newOrgSchema = orgFormSchema.pick({ name: true })
+export type NewOrgInput = z.infer<typeof newOrgSchema>
+
 export const updateOrgSchema = orgFormSchema.extend({ orgId: idSchema })
 
 export const inviteFormSchema = z.object({

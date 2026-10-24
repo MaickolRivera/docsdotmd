@@ -164,13 +164,12 @@ export const es = {
     open: "Entrar",
     newPage: {
       title: "Nueva organización",
-      description: "Tendrás el rol de owner y después podrás invitar a tu equipo.",
-      name: "Nombre",
+      name: "Nombre de la organización",
       namePlaceholder: "Acme",
-      slug: "Dirección",
-      slugHelp: (slug: string) => `Tu documentación estará en /${slug || "tu-organizacion"}`,
       submit: "Crear organización",
+      invalidName: "Usa un nombre con letras o números.",
       slugTaken: "Esa dirección ya está en uso.",
+      tooManySimilar: "Ya hay demasiadas organizaciones con un nombre parecido. Prueba con otro.",
     },
   },
 

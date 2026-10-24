@@ -8,31 +8,45 @@ import { fail, invalid, ok, type ActionResult } from "@/lib/action-result"
 import { ROLES } from "@/lib/constants"
 import { dbFailure } from "@/lib/db-errors"
 import { t } from "@/lib/i18n"
+import { slugify } from "@/lib/slug"
 import { attachmentPaths, removeStorageObjects } from "@/lib/storage"
 import {
   deleteOrgSchema,
   idSchema,
   memberSchema,
+  newOrgSchema,
   orgFormSchema,
   updateOrgSchema,
 } from "@/lib/validators"
 
+const MAX_SLUG_ATTEMPTS = 9
+
 /** Crea la organización (RPC create_organization) y entra a ella. */
 export async function createOrganization(input: unknown): Promise<ActionResult> {
-  const parsed = orgFormSchema.safeParse(input)
+  const parsed = newOrgSchema.safeParse(input)
   if (!parsed.success) return invalid(parsed.error)
+
+  // La dirección sale del nombre; si ya está en uso se prueba con -2, -3…
+  const base = slugify(parsed.data.name)
+  const check = orgFormSchema.safeParse({ name: parsed.data.name, slug: base })
+  if (!check.success) {
+    const message = check.error.issues[0]?.message ?? t.orgs.newPage.invalidName
+    return fail(message, { name: message })
+  }
 
   const session = await requireSession()
   if (!session.allowed) return session.failure
 
-  const { data: slug, error } = await session.supabase.rpc("create_organization", {
-    p_name: parsed.data.name,
-    p_slug: parsed.data.slug,
-  })
-  if (error) {
-    return dbFailure(error, { unique: { field: "slug", message: t.orgs.newPage.slugTaken } })
+  for (let attempt = 1; attempt <= MAX_SLUG_ATTEMPTS; attempt++) {
+    const slug = attempt === 1 ? base : `${base.slice(0, 48 - 3)}-${attempt}`
+    const { data, error } = await session.supabase.rpc("create_organization", {
+      p_name: parsed.data.name,
+      p_slug: slug,
+    })
+    if (!error) redirect(`/${data}`)
+    if (error.code !== "23505") return dbFailure(error)
   }
-  redirect(`/${slug}`)
+  return fail(t.orgs.newPage.tooManySimilar, { name: t.orgs.newPage.tooManySimilar })
 }
 
 /** Renombra la organización o cambia su dirección. Solo owner. */

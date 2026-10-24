@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CircleAlert } from "lucide-react"
 import { useState, useTransition } from "react"
-import { useForm, useWatch } from "react-hook-form"
+import { useForm } from "react-hook-form"
 
 import { createOrganization } from "@/actions/orgs"
 import { TextField } from "@/components/forms/text-field"
@@ -13,15 +13,15 @@ import { FieldGroup } from "@/components/ui/field"
 import { Spinner } from "@/components/ui/spinner"
 import { applyFieldErrors } from "@/lib/form-errors"
 import { t } from "@/lib/i18n"
-import { slugify } from "@/lib/slug"
-import { orgFormSchema, type OrgFormInput } from "@/lib/validators"
+import { newOrgSchema, type NewOrgInput } from "@/lib/validators"
 
+/** Solo pide el nombre: la dirección (slug) se genera a partir de él en el servidor. */
 export function NewOrgForm() {
   const [error, setError] = useState<string>()
   const [pending, startTransition] = useTransition()
-  const form = useForm<OrgFormInput>({
-    resolver: zodResolver(orgFormSchema),
-    defaultValues: { name: "", slug: "" },
+  const form = useForm<NewOrgInput>({
+    resolver: zodResolver(newOrgSchema),
+    defaultValues: { name: "" },
   })
 
   const onSubmit = form.handleSubmit((values) => {
@@ -29,23 +29,11 @@ export function NewOrgForm() {
     startTransition(async () => {
       const result = await createOrganization(values)
       if (result && !result.ok) {
-        if (!applyFieldErrors(result, form.setError, ["name", "slug"])) setError(result.error)
+        if (!applyFieldErrors(result, form.setError, ["name"])) setError(result.error)
       }
     })
   })
 
-  // El slug sigue al nombre hasta que la persona lo edita a mano (queda "dirty").
-  const nameField = form.register("name", {
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (!form.getFieldState("slug").isDirty) {
-        form.setValue("slug", slugify(event.target.value), {
-          shouldValidate: form.formState.isSubmitted,
-        })
-      }
-    },
-  })
-  const slugField = form.register("slug")
-  const slug = useWatch({ control: form.control, name: "slug" })
   const { errors } = form.formState
 
   return (
@@ -62,18 +50,9 @@ export function NewOrgForm() {
           label={t.orgs.newPage.name}
           placeholder={t.orgs.newPage.namePlaceholder}
           autoComplete="organization"
+          autoFocus
           error={errors.name?.message}
-          {...nameField}
-        />
-        <TextField
-          id="slug"
-          label={t.orgs.newPage.slug}
-          placeholder="acme"
-          autoCapitalize="none"
-          spellCheck={false}
-          description={t.orgs.newPage.slugHelp(slug)}
-          error={errors.slug?.message}
-          {...slugField}
+          {...form.register("name")}
         />
         <Button type="submit" disabled={pending}>
           {pending ? <Spinner /> : null}
