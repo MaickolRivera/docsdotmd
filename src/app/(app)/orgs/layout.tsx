@@ -16,7 +16,7 @@ export default async function OrgsLayout({ children }: LayoutProps<"/orgs">) {
           <Link href="/" aria-label={t.common.appName}>
             <Logo />
           </Link>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 pb-2.5">
             <ThemeToggle />
             <UserMenu
               name={profile?.full_name ?? ""}
