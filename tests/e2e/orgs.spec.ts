@@ -12,11 +12,11 @@ test.describe("Organizaciones", () => {
 
     await expect(page).toHaveURL(/\/orgs$/)
     await expect(page.getByText("Aún no perteneces a ninguna organización")).toBeVisible()
-    await page.getByRole("link", { name: "Nueva organización" }).first().click()
+    await page.getByRole("button", { name: "Nueva organización" }).first().click()
 
+    // La dirección sale del nombre.
     const slug = `e2e-${Date.now()}`
-    await page.getByLabel("Nombre").fill("Organización de prueba")
-    await page.getByLabel("Dirección").fill(slug)
+    await page.getByLabel("Nombre").fill(slug.toUpperCase())
     await page.getByRole("button", { name: "Crear organización" }).click()
 
     await expect(page).toHaveURL(new RegExp(`/${slug}/documentacion/bienvenida$`))
@@ -26,19 +26,32 @@ test.describe("Organizaciones", () => {
     await expect(page.getByRole("link", { name: "Editar página" }).first()).toBeVisible()
   })
 
-  test("una dirección reservada o repetida muestra un error en el campo", async ({ page }) => {
+  test("un nombre que da una dirección reservada muestra un error en el campo", async ({
+    page,
+  }) => {
     const email = uniqueEmail("slug")
     await createConfirmedUser(email, "Slug-12345")
     await login(page, email, "Slug-12345")
-    await page.goto("/orgs/nueva")
 
-    await page.getByLabel("Nombre").fill("Acme otra vez")
-    await page.getByLabel("Dirección").fill("acme")
-    await page.getByRole("button", { name: "Crear organización" }).click()
-    await expect(page.getByText("Esa dirección ya está en uso.")).toBeVisible()
-
-    await page.getByLabel("Dirección").fill("orgs")
+    await page.getByRole("button", { name: "Nueva organización" }).first().click()
+    await page.getByLabel("Nombre").fill("Orgs")
     await page.getByRole("button", { name: "Crear organización" }).click()
     await expect(page.getByText("Esa dirección está reservada por la aplicación")).toBeVisible()
+  })
+
+  test("un nombre repetido recibe una dirección con sufijo", async ({ page }) => {
+    const email = uniqueEmail("repetida")
+    await createConfirmedUser(email, "Repetida-12345")
+    await login(page, email, "Repetida-12345")
+
+    const name = `Repetida ${Date.now()}`
+    const slug = name.toLowerCase().replace(/\s+/g, "-")
+    for (const expected of [slug, `${slug}-2`]) {
+      await page.goto("/orgs")
+      await page.getByRole("button", { name: "Nueva organización" }).first().click()
+      await page.getByLabel("Nombre").fill(name)
+      await page.getByRole("button", { name: "Crear organización" }).click()
+      await expect(page).toHaveURL(new RegExp(`/${expected}/`))
+    }
   })
 })
