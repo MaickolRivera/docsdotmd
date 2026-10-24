@@ -1,4 +1,4 @@
-import { ArrowRight, Eye } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import type { ReactNode } from "react"
@@ -24,7 +24,6 @@ export const metadata: Metadata = {
   title: t.guide.title,
   description: t.guide.description,
 }
-
 
 function SectionHeading({ id, children }: { id: string; children: ReactNode }) {
   return (
@@ -53,17 +52,13 @@ function Example({ example }: { example: GuideExample }) {
   }
   return (
     <div className="my-5">
-      <div className="border rounded-xl p-5 sm:px-6">
-        <p className="text-sm font-medium text-muted-foreground px-3 mb-6 pb-3 border-b">
+      <div className="rounded-xl border p-5 sm:px-6">
+        <p className="mb-6 border-b px-3 pb-3 text-sm font-medium text-muted-foreground">
           {t.guide.result}
         </p>
         <DocsMarkdown source={example.source} />
-        <DocsMarkdown
-          source={toCodeBlock(example.source)}
-          className="rounded-t-xl"
-        />
+        <DocsMarkdown source={toCodeBlock(example.source)} className="rounded-t-xl" />
       </div>
-
     </div>
   )
 }
@@ -71,17 +66,16 @@ function Example({ example }: { example: GuideExample }) {
 export default function GuidePage() {
   return (
     <div data-header="compact" className="flex min-h-dvh flex-col">
-
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-6xl justify-between items-center gap-4 px-4">
-          <div className="flex flex-row gap-2 items-center">
-            <Link href="/" aria-label={t.common.appName} className="mt-1">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
+          <div className="flex flex-row items-center gap-2 pt-2">
+            <Link href="/" aria-label={t.common.appName}>
               <Logo />
             </Link>
-            <span aria-hidden className="text-muted-foreground">
+            <span aria-hidden className="pb-2 text-muted-foreground">
               /
             </span>
-            <span className="truncate text-sm font-medium">{t.landing.nav.guide}</span>
+            <span className="truncate pb-1 text-sm font-medium">{t.landing.nav.guide}</span>
           </div>
 
           <div className="flex items-center gap-2">
@@ -107,7 +101,7 @@ export default function GuidePage() {
             <section>
               <SectionHeading id={GUIDE_PROCESS.id}>{GUIDE_PROCESS.title}</SectionHeading>
               <DocsMarkdown source={GUIDE_PROCESS.source} />
-              
+
               <DocAccordion title={t.guide.viewSource}>
                 <DocsMarkdown source={toCodeBlock(GUIDE_PROCESS.source)} />
               </DocAccordion>
@@ -117,7 +111,7 @@ export default function GuidePage() {
               <section key={section.id}>
                 <SectionHeading id={section.id}>{section.title}</SectionHeading>
                 {section.intro ? <DocsMarkdown source={section.intro} /> : null}
-                <div  className="flex flex-col gap-5 border-b pb-10">
+                <div className="flex flex-col gap-5 border-b pb-10">
                   {section.examples.map((example) => (
                     <div key={example.id}>
                       <ExampleHeading id={example.id}>{example.title}</ExampleHeading>

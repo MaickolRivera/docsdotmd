@@ -1,6 +1,6 @@
 import type { TocItem } from "@/lib/markdown/toc"
 
-// Contenido de la guía pública (/guia). 
+// Contenido de la guía pública (/guia).
 
 export type GuideExample = {
   /** Ancla del título (`/guia#pasos`). */
@@ -139,9 +139,7 @@ Los miembros con acceso al espacio. Si el espacio es restringido, solo los grupo
 
 :::accordion{title="¿Se puede recuperar una página borrada?"}
 No. Si crees que la vas a necesitar, déjala en borrador en lugar de borrarla.
-:::
-
-#####`,
+:::`,
       },
       {
         id: "tarjetas",
@@ -183,7 +181,7 @@ Escriben en markdown con vista previa en vivo.
 :::
 ::::`,
       },
-            {
+      {
         id: "bloques-de-codigo",
         title: "Bloques de código",
         description:

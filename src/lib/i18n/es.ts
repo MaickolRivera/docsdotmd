@@ -118,10 +118,9 @@ export const es = {
     badge: "Guía de componentes e iconos",
     title: "DOCS",
     titleAccent: "dotmd",
-    subtitle:
-      "Escribe en markdown con componentes interactivos y organiza tus espacios!",
+    subtitle: "Escribe en markdown con componentes interactivos y organiza tus espacios!",
     ctaPrimary: "Crear cuenta",
-    ctaSecondary: "Iniciar sesión",
+    ctaSecondary: "Ingresar",
     demo: {
       label: "Demo interactiva de DOCSdotmd",
       hint: "Demo interactiva.",
@@ -130,8 +129,7 @@ export const es = {
       pages: "Páginas del espacio",
     },
     featuresTitle: "Lo que tu equipo necesita",
-    featuresSubtitle:
-      "Escribe, organiza y comparte la documentación desde el primer día.",
+    featuresSubtitle: "Escribe, organiza y comparte la documentación desde el primer día.",
     features: [
       {
         icon: "file-text",
@@ -521,7 +519,7 @@ Contenido de la derecha.
     lead: "Todo lo que puedes usar al escribir una página, con su sintaxis y cómo se ve. Copia cualquier ejemplo y pégalo en el editor.",
     result: "Resultado",
     viewSource: "Ver el markdown de esta sección",
-    goToApp: "Ir a la app",
+    goToApp: "Ingresar",
     icons: {
       search: "Buscar por nombre o alias…",
       count: (n: number) => (n === 1 ? "1 icono" : `${n} iconos`),
