@@ -67,6 +67,13 @@ export async function signUp(
     return fail(t.common.genericError)
   }
 
+  // Con confirmación por correo activa, Supabase no devuelve error si el correo
+  // ya tiene cuenta (por privacidad): responde como si se hubiera creado, sin
+  // enviar nada y con la lista de identidades vacía.
+  if (data.user && data.user.identities?.length === 0) {
+    return fail(t.auth.register.emailTaken, { email: t.auth.register.emailTaken })
+  }
+
   // Sin confirmación por correo (configuración local) ya hay sesión.
   if (data.session) redirect(target)
   return ok({ email: parsed.data.email })

@@ -89,7 +89,8 @@ export const es = {
       checkEmailTitle: "Revisa tu correo",
       checkEmail: (email: string) =>
         `Te enviamos un enlace a ${email} para confirmar tu cuenta. Ábrelo para continuar.`,
-      emailTaken: "Ya existe una cuenta con ese correo.",
+      emailTaken: "Ya existe una cuenta con ese correo. Inicia sesión o recupera tu contraseña.",
+      alreadyConfirmed: "¿Ya confirmaste tu correo?",
       weakPassword: "La contraseña es muy débil. Usa una más larga o más variada.",
       acceptPrefix: "Acepto los",
       acceptAnd: "y la",

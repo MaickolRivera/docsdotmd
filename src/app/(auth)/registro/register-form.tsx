@@ -48,7 +48,18 @@ export function RegisterForm({ next }: { next?: string }) {
       <Alert>
         <MailCheck />
         <AlertTitle>{t.auth.register.checkEmailTitle}</AlertTitle>
-        <AlertDescription>{t.auth.register.checkEmail(sentTo)}</AlertDescription>
+        <AlertDescription>
+          <p>{t.auth.register.checkEmail(sentTo)}</p>
+          <p className="mt-2">
+            {t.auth.register.alreadyConfirmed}{" "}
+            <Link
+              href={next ? `/login?next=${encodeURIComponent(next)}` : "/login"}
+              className="font-medium text-primary hover:underline"
+            >
+              {t.auth.register.login}
+            </Link>
+          </p>
+        </AlertDescription>
       </Alert>
     )
   }
