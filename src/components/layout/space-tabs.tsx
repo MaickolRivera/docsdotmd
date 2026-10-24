@@ -3,6 +3,7 @@
 import { Settings } from "lucide-react"
 import Link from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
+import type { ReactNode } from "react"
 
 import { t } from "@/lib/i18n"
 import { DocIcon } from "@/lib/icons"
@@ -15,10 +16,13 @@ export function SpaceTabs({
   orgSlug,
   spaces,
   showSettings,
+  newSpace,
 }: {
   orgSlug: string
   spaces: SpaceTab[]
   showSettings: boolean
+  /** Botón para crear un espacio (solo admins); va justo después de la última pestaña. */
+  newSpace?: ReactNode
 }) {
   const active = useSelectedLayoutSegment()
 
@@ -34,9 +38,9 @@ export function SpaceTabs({
   return (
     <nav
       aria-label={t.header.spaces}
-      className="mx-auto flex max-w-[1440px] items-center gap-6 px-4 lg:px-6"
+      className="mx-auto flex max-w-360 items-center gap-6 px-4 lg:px-6"
     >
-      <div className="-mb-px flex min-w-0 flex-1 [scrollbar-width:none] items-center gap-6 overflow-x-auto">
+      <div className="-mb-px flex min-w-0 flex-1 scrollbar-none items-center gap-6 overflow-x-auto">
         {spaces.map((space) => {
           const selected = active === space.slug
           return (
@@ -51,6 +55,7 @@ export function SpaceTabs({
             </Link>
           )
         })}
+        {newSpace}
       </div>
       {showSettings ? (
         <Link

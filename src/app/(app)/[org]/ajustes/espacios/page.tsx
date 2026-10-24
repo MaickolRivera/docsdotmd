@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 
 import { SettingsSection } from "@/components/settings/section"
-import { SpaceDialog, SpacesTable } from "@/components/settings/spaces-settings"
+import { SpacesTable } from "@/components/settings/spaces-settings"
 import { getGroups, getOrgContext, getSpacesWithAccess } from "@/lib/data"
 import { t } from "@/lib/i18n"
 
@@ -17,11 +17,7 @@ export default async function SpacesSettingsPage({ params }: PageProps<"/[org]/a
   const groupOptions = groups.map(({ id, name }) => ({ id, name }))
 
   return (
-    <SettingsSection
-      title={t.settings.spaces.title}
-      description={t.settings.spaces.description}
-      action={<SpaceDialog orgId={context.org.id} groups={groupOptions} />}
-    >
+    <SettingsSection title={t.settings.spaces.title} description={t.settings.spaces.description}>
       <SpacesTable orgId={context.org.id} orgSlug={orgSlug} spaces={spaces} groups={groupOptions} />
     </SettingsSection>
   )

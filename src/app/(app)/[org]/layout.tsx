@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 
 import { OrgHeader } from "@/components/layout/org-header"
 import { ADMIN_ROLES, hasRole } from "@/lib/constants"
-import { getOrgContext, getProfile, getSpaces, getUserOrgs } from "@/lib/data"
+import { getGroups, getOrgContext, getProfile, getSpaces, getUserOrgs } from "@/lib/data"
 
 export async function generateMetadata({ params }: LayoutProps<"/[org]">): Promise<Metadata> {
   const { org } = await params
@@ -19,10 +19,13 @@ export default async function OrgLayout({ children, params }: LayoutProps<"/[org
   const context = await getOrgContext(orgSlug)
   if (!context) notFound()
 
-  const [spaces, orgs, profile] = await Promise.all([
+  const isAdmin = hasRole(context.role, ADMIN_ROLES)
+  const [spaces, orgs, profile, groups] = await Promise.all([
     getSpaces(context.org.id),
     getUserOrgs(),
     getProfile(),
+    // Solo los admins crean espacios desde las pestañas.
+    isAdmin ? getGroups(context.org.id) : [],
   ])
 
   return (
@@ -32,7 +35,8 @@ export default async function OrgLayout({ children, params }: LayoutProps<"/[org
         spaces={spaces.map(({ id, name, slug, icon }) => ({ id, name, slug, icon }))}
         orgs={orgs.map(({ name, slug, role }) => ({ name, slug, role }))}
         user={{ name: profile?.full_name ?? "", email: profile?.email ?? "" }}
-        isAdmin={hasRole(context.role, ADMIN_ROLES)}
+        isAdmin={isAdmin}
+        groups={groups.map(({ id, name }) => ({ id, name }))}
       />
       <div className="flex flex-1 flex-col">{children}</div>
     </div>

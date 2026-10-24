@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ArrowDown, ArrowUp, ExternalLink, Lock, Pencil, Plus, Trash2, Users } from "lucide-react"
 import Link from "next/link"
-import { useState, useTransition } from "react"
+import { useState, useTransition, type ReactNode } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -71,10 +71,13 @@ export function SpaceDialog({
   orgId,
   groups,
   space,
+  trigger,
 }: {
   orgId: string
   groups: GroupOption[]
   space?: SpaceRow
+  /** Botón que abre el diálogo; por defecto, el de editar o el de "Nuevo espacio". */
+  trigger?: ReactNode
 }) {
   const [open, setOpen] = useState(false)
   const [pending, startTransition] = useTransition()
@@ -132,7 +135,9 @@ export function SpaceDialog({
       }}
     >
       <DialogTrigger asChild>
-        {space ? (
+        {trigger ? (
+          trigger
+        ) : space ? (
           <Button variant="ghost" size="icon-sm" aria-label={`${s.editTitle}: ${space.name}`}>
             <Pencil />
           </Button>

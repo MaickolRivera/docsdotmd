@@ -1,7 +1,11 @@
+import { Plus } from "lucide-react"
 import Link from "next/link"
 
 import { LogoMark } from "@/components/logo"
+import { SpaceDialog } from "@/components/settings/spaces-settings"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Button } from "@/components/ui/button"
+import { t } from "@/lib/i18n"
 
 import { SearchDialog } from "./search-dialog"
 import { SpaceTabs, type SpaceTab } from "./space-tabs"
@@ -17,16 +21,19 @@ export function OrgHeader({
   orgs,
   user,
   isAdmin,
+  groups,
 }: {
   org: { id: string; name: string; slug: string }
   spaces: SpaceTab[]
   orgs: UserMenuOrg[]
   user: { name: string; email: string }
   isAdmin: boolean
+  /** Grupos para el formulario de nuevo espacio (solo se usan si es admin). */
+  groups: { id: string; name: string }[]
 }) {
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-3 px-4 lg:px-6">
+    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70">
+      <div className="mx-auto flex h-16 max-w-360 items-center gap-3 px-4 lg:px-6">
         <Link href={`/${org.slug}`} className="flex min-w-0 shrink-0 items-center gap-2.5 md:w-60">
           <LogoMark />
           <span className="truncate font-semibold tracking-tight">{org.name}</span>
@@ -45,7 +52,29 @@ export function OrgHeader({
           />
         </div>
       </div>
-      <SpaceTabs orgSlug={org.slug} spaces={spaces} showSettings={isAdmin} />
+      <SpaceTabs
+        orgSlug={org.slug}
+        spaces={spaces}
+        showSettings={isAdmin}
+        newSpace={
+          isAdmin ? (
+            <SpaceDialog
+              orgId={org.id}
+              groups={groups}
+              trigger={
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="shrink-0 rounded-full text-muted-foreground pb-1 cursor-pointer"
+                  aria-label={t.settings.spaces.new}
+                >
+                  <Plus />
+                </Button>
+              }
+            />
+          ) : null
+        }
+      />
     </header>
   )
 }
