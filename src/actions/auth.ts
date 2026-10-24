@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 
 import { fail, invalid, ok, type ActionResult } from "@/lib/action-result"
 import { t } from "@/lib/i18n"
+import { LEGAL_VERSION } from "@/lib/legal"
 import { safeRedirectPath } from "@/lib/redirect"
 import { getSiteUrl } from "@/lib/site-url"
 import { createClient } from "@/lib/supabase/server"
@@ -45,7 +46,12 @@ export async function signUp(
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      data: { full_name: parsed.data.fullName },
+      data: {
+        full_name: parsed.data.fullName,
+        // Prueba de la autorización: cuándo y qué versión de los textos aceptó.
+        terms_accepted_at: new Date().toISOString(),
+        terms_version: LEGAL_VERSION,
+      },
       emailRedirectTo: `${await getSiteUrl()}/auth/callback?next=${encodeURIComponent(target)}`,
     },
   })

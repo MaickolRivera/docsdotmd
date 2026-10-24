@@ -7,7 +7,16 @@ import type { Database } from "@/types/database"
 import { getSupabaseEnv } from "./env"
 
 /** Rutas que no requieren sesión. */
-const PUBLIC_PATHS = ["/", "/guia", "/login", "/registro", "/recuperar", "/actualizar-clave"]
+const PUBLIC_PATHS = [
+  "/",
+  "/guia",
+  "/privacidad",
+  "/terminos",
+  "/login",
+  "/registro",
+  "/recuperar",
+  "/actualizar-clave",
+]
 /** Formularios de acceso: con sesión no tiene sentido verlos. */
 const GUEST_ONLY_PATHS = ["/login", "/registro", "/recuperar"]
 

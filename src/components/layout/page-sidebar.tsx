@@ -175,7 +175,7 @@ export function PageSidebar({
         </div>
       </ScrollArea>
       {canEdit ? (
-        <div className="flex items-center gap-2 border-t p-3">
+        <div className="flex items-center gap-2 border-t p-3 my-3">
           <Button
             size="sm"
             variant="outline"

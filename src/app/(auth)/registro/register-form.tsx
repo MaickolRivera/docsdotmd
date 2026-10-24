@@ -3,13 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CircleAlert, MailCheck } from "lucide-react"
 import { useState, useTransition } from "react"
-import { useForm } from "react-hook-form"
+import Link from "next/link"
+import { Controller, useForm } from "react-hook-form"
 
 import { signUp } from "@/actions/auth"
 import { TextField } from "@/components/forms/text-field"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { FieldGroup } from "@/components/ui/field"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Spinner } from "@/components/ui/spinner"
 import { applyFieldErrors } from "@/lib/form-errors"
 import { t } from "@/lib/i18n"
@@ -21,7 +23,7 @@ export function RegisterForm({ next }: { next?: string }) {
   const [pending, startTransition] = useTransition()
   const form = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { fullName: "", email: "", password: "" },
+    defaultValues: { fullName: "", email: "", password: "", acceptTerms: false },
   })
 
   const onSubmit = form.handleSubmit((values) => {
@@ -33,7 +35,9 @@ export function RegisterForm({ next }: { next?: string }) {
         setSentTo(result.data.email)
         return
       }
-      if (!applyFieldErrors(result, form.setError, ["fullName", "email", "password"])) {
+      if (
+        !applyFieldErrors(result, form.setError, ["fullName", "email", "password", "acceptTerms"])
+      ) {
         setError(result.error)
       }
     })
@@ -84,6 +88,42 @@ export function RegisterForm({ next }: { next?: string }) {
           description={t.validation.passwordMin(8)}
           error={errors.password?.message}
           {...form.register("password")}
+        />
+        <Controller
+          control={form.control}
+          name="acceptTerms"
+          render={({ field }) => (
+            <Field orientation="horizontal" data-invalid={errors.acceptTerms ? true : undefined}>
+              <Checkbox
+                id="acceptTerms"
+                checked={field.value}
+                onCheckedChange={(checked) => field.onChange(checked === true)}
+                aria-invalid={errors.acceptTerms ? true : undefined}
+              />
+              <div className="flex flex-col gap-1">
+                <FieldLabel htmlFor="acceptTerms" className="inline leading-5 font-normal">
+                  {t.auth.register.acceptPrefix}{" "}
+                  <Link
+                    href="/terminos"
+                    target="_blank"
+                    className="font-medium text-primary hover:underline"
+                  >
+                    {t.legal.terms}
+                  </Link>{" "}
+                  {t.auth.register.acceptAnd}{" "}
+                  <Link
+                    href="/privacidad"
+                    target="_blank"
+                    className="font-medium text-primary hover:underline"
+                  >
+                    {t.legal.privacy}
+                  </Link>
+                  .
+                </FieldLabel>
+                {errors.acceptTerms ? <FieldError>{errors.acceptTerms.message}</FieldError> : null}
+              </div>
+            </Field>
+          )}
         />
         <Button type="submit" disabled={pending} className="w-full">
           {pending ? <Spinner /> : null}

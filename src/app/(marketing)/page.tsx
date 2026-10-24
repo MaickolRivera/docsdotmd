@@ -47,17 +47,7 @@ export default function LandingPage() {
 
       <main className="flex-1">
         <section className="mx-auto flex max-w-4xl flex-col items-center px-4 pt-16 pb-14 text-center md:py-18">
-          <Link
-            href="/guia"
-            className="group inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1 text-sm shadow-xs transition-colors hover:bg-muted/60"
-          >
-            <span className="pt-0.5 text-muted-foreground transition-colors group-hover:text-foreground">
-              {t.landing.badge}
-            </span>
-            <ArrowRight className="size-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-          </Link>
-
-          <h1 className="mt-5 text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl">
             {t.landing.title}
             <span className="text-primary">{t.landing.titleAccent}</span>
           </h1>
@@ -65,6 +55,16 @@ export default function LandingPage() {
           <p className="mt-3 max-w-sm text-lg text-pretty text-muted-foreground">
             {t.landing.subtitle}
           </p>
+
+          <Link
+            href="/guia"
+            className="group inline-flex items-center gap-2 rounded-full border bg-background px-3 mt-5 text-sm shadow-xs transition-colors hover:bg-muted/60"
+          >
+            <span className="pt-0.5 text-muted-foreground transition-colors group-hover:text-foreground">
+              {t.landing.badge}
+            </span>
+            <ArrowRight className="size-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </section>
 
         <section
@@ -102,8 +102,15 @@ export default function LandingPage() {
       </main>
 
       <footer className="border-t">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 text-sm text-muted-foreground">
-          <Logo className="hidden text-foreground md:block" />
+        <div className="mx-auto text-xs flex h-14 max-w-6xl items-center justify-between px-4 text-sm text-muted-foreground">
+          <nav aria-label="Legal" className="flex items-center gap-4">
+            <Link href="/privacidad" className="hover:text-foreground">
+              {t.legal.privacy}
+            </Link>
+            <Link href="/terminos" className="hover:text-foreground">
+              {t.legal.terms}
+            </Link>
+          </nav>
           <div>
             <span>{t.landing.footer}</span>
             <a

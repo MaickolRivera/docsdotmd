@@ -62,6 +62,8 @@ export const registerSchema = z.object({
   fullName: textSchema(2, 120),
   email: emailSchema,
   password: newPasswordSchema,
+  // Autorización expresa para tratar los datos (Ley 1581 de 2012).
+  acceptTerms: z.boolean().refine((value) => value === true, { error: t.validation.termsRequired }),
 })
 export type RegisterInput = z.infer<typeof registerSchema>
 

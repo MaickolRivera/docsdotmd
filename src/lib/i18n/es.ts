@@ -47,6 +47,7 @@ export const es = {
   },
 
   validation: {
+    termsRequired: "Debes aceptar los términos y la política de datos para continuar",
     required: "Este campo es obligatorio",
     email: "Escribe un correo válido",
     passwordMin: (min: number) => `Usa al menos ${min} caracteres`,
@@ -90,6 +91,8 @@ export const es = {
         `Te enviamos un enlace a ${email} para confirmar tu cuenta. Ábrelo para continuar.`,
       emailTaken: "Ya existe una cuenta con ese correo.",
       weakPassword: "La contraseña es muy débil. Usa una más larga o más variada.",
+      acceptPrefix: "Acepto los",
+      acceptAnd: "y la",
     },
     recover: {
       title: "Recupera tu contraseña",
@@ -109,6 +112,11 @@ export const es = {
       requestNew: "Pedir un enlace nuevo",
       success: "Contraseña actualizada.",
     },
+  },
+
+  legal: {
+    privacy: "Política de datos",
+    terms: "Términos de uso",
   },
 
   landing: {
