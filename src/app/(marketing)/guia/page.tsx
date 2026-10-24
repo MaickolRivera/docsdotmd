@@ -25,11 +25,6 @@ export const metadata: Metadata = {
   description: t.guide.description,
 }
 
-/**
- * Sin margen arriba del primer bloque ni debajo del último. Con !important
- * porque pasos y columnas definen su margen fuera de las capas de Tailwind.
- */
-const trim = "[&>:first-child]:mt-0! [&>:last-child]:mb-0!"
 
 function SectionHeading({ id, children }: { id: string; children: ReactNode }) {
   return (
@@ -52,36 +47,35 @@ function Example({ example }: { example: GuideExample }) {
   if (example.preview === false) {
     return (
       <div className="my-5">
-        <DocsMarkdown source={toCodeBlock(example.source)} className={trim} />
+        <DocsMarkdown source={toCodeBlock(example.source)} />
       </div>
     )
   }
   return (
     <div className="my-5">
-      <div className="rounded-t-xl border border-b-0 p-5 sm:px-6">
-        <p className="mb-4 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-          <Eye className="size-3.5" />
+      <div className="border rounded-xl p-5 sm:px-6">
+        <p className="text-sm font-medium text-muted-foreground px-3 mb-6 pb-3 border-b">
           {t.guide.result}
         </p>
-        <DocsMarkdown source={example.source} className={trim} />
+        <DocsMarkdown source={example.source} />
+        <DocsMarkdown
+          source={toCodeBlock(example.source)}
+          className="rounded-t-xl"
+        />
       </div>
-      <DocsMarkdown
-        source={toCodeBlock(example.source)}
-        className="[&_.docs-code]:my-0 [&_.docs-code]:rounded-t-none"
-      />
+
     </div>
   )
 }
 
-/** Guía pública de componentes e iconos, escrita con los mismos componentes. */
 export default function GuidePage() {
   return (
-    // data-header="compact": header de una fila (ver --header-height en globals.css).
     <div data-header="compact" className="flex min-h-dvh flex-col">
-      <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
-          <div className="flex min-w-0 items-center gap-2">
-            <Link href="/" aria-label={t.common.appName}>
+
+      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur">
+        <div className="mx-auto flex h-14 max-w-6xl justify-between items-center gap-4 px-4">
+          <div className="flex flex-row gap-2 items-center">
+            <Link href="/" aria-label={t.common.appName} className="mt-1">
               <Logo />
             </Link>
             <span aria-hidden className="text-muted-foreground">
@@ -89,6 +83,7 @@ export default function GuidePage() {
             </span>
             <span className="truncate text-sm font-medium">{t.landing.nav.guide}</span>
           </div>
+
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Button asChild variant="outline" size="sm">
@@ -103,8 +98,7 @@ export default function GuidePage() {
 
       <div className="mx-auto flex w-full max-w-6xl flex-1">
         <main className="min-w-0 flex-1 px-4 pt-10 pb-20 sm:px-8 lg:px-12">
-          <div className="mx-auto max-w-[760px]">
-            <p className="text-sm font-medium text-primary">{t.landing.nav.guide}</p>
+          <div className="mx-auto max-w-190">
             <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance">
               {t.guide.title}
             </h1>
@@ -112,29 +106,32 @@ export default function GuidePage() {
 
             <section>
               <SectionHeading id={GUIDE_PROCESS.id}>{GUIDE_PROCESS.title}</SectionHeading>
-              <DocsMarkdown source={GUIDE_PROCESS.source} className={trim} />
+              <DocsMarkdown source={GUIDE_PROCESS.source} />
+              
               <DocAccordion title={t.guide.viewSource}>
-                <DocsMarkdown source={toCodeBlock(GUIDE_PROCESS.source)} className={trim} />
+                <DocsMarkdown source={toCodeBlock(GUIDE_PROCESS.source)} />
               </DocAccordion>
             </section>
 
             {GUIDE_SECTIONS.map((section) => (
               <section key={section.id}>
                 <SectionHeading id={section.id}>{section.title}</SectionHeading>
-                {section.intro ? <DocsMarkdown source={section.intro} className={trim} /> : null}
-                {section.examples.map((example) => (
-                  <div key={example.id}>
-                    <ExampleHeading id={example.id}>{example.title}</ExampleHeading>
-                    <DocsMarkdown source={example.description} className={trim} />
-                    <Example example={example} />
-                  </div>
-                ))}
+                {section.intro ? <DocsMarkdown source={section.intro} /> : null}
+                <div  className="flex flex-col gap-5 border-b pb-10">
+                  {section.examples.map((example) => (
+                    <div key={example.id}>
+                      <ExampleHeading id={example.id}>{example.title}</ExampleHeading>
+                      <DocsMarkdown source={example.description} />
+                      <Example example={example} />
+                    </div>
+                  ))}
+                </div>
               </section>
             ))}
 
             <section>
               <SectionHeading id={GUIDE_ICONS.id}>{GUIDE_ICONS.title}</SectionHeading>
-              <DocsMarkdown source={GUIDE_ICONS.intro} className={trim} />
+              <DocsMarkdown source={GUIDE_ICONS.intro} />
               <IconGallery />
             </section>
           </div>

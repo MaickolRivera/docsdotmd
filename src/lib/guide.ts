@@ -1,8 +1,6 @@
 import type { TocItem } from "@/lib/markdown/toc"
 
-// Contenido de la guía pública (/guia). Los ejemplos se renderizan con el mismo
-// DocsMarkdown que las páginas, así que la guía siempre muestra lo que de
-// verdad se ve al publicar.
+// Contenido de la guía pública (/guia). 
 
 export type GuideExample = {
   /** Ancla del título (`/guia#pasos`). */
@@ -23,30 +21,22 @@ export type GuideSection = {
   examples: GuideExample[]
 }
 
-/** La guía también es un ejemplo: esta sección es un proceso documentado. */
 export const GUIDE_PROCESS = {
   id: "documenta-un-proceso",
   title: "Documenta un proceso",
   source: `Esta sección es un proceso documentado de verdad: explica cómo documentar un proceso y está escrita con los mismos componentes que se describen más abajo.
 
 :::steps
-### Crea la página en el espacio correcto
-En la barra lateral del espacio, usa **+ Página**. Elige un título que diga qué se logra: «Desplegar a producción» se entiende mejor que «Despliegues».
+### Crea la página en el espacio de tu organización
+En la barra lateral del espacio, usa **+ Página**.
 
 ### Explica el objetivo y lo que se necesita
-Empieza con una o dos frases: para qué sirve el proceso, quién lo hace y qué hace falta antes de empezar.
+Documenta el proceso con markdown y mejora la experiencia usando nuestros componentes.
+Empieza con el para qué sirve el proceso, quién lo hace y qué hace falta antes de empezar.
 
 :::callout{type="info" title="Procesos internos"}
 Si solo debe verlo un equipo, crea la página en un espacio restringido: solo la verán los grupos con acceso (y los admins), también en la búsqueda.
 :::
-
-### Escribe un paso por acción
-Cada \`###\` dentro de \`:::steps\` es un paso numerado. Si un paso tiene comandos, ponlos en un bloque de código:
-
-~~~bash title="Terminal"
-git switch -c release/1.4.0
-pnpm test
-~~~
 
 ### Señala los riesgos
 Usa avisos \`warning\` o \`danger\` para lo que no se puede deshacer, y acordeones para las preguntas frecuentes.
@@ -61,6 +51,44 @@ En el editor escribe \`/\` al inicio de una línea, o usa **Insertar componente*
 }
 
 export const GUIDE_SECTIONS: GuideSection[] = [
+  {
+    id: "markdown-basico",
+    title: "Markdown básico",
+    intro:
+      "Además de los componentes funciona todo el markdown de siempre. Por seguridad no se admite HTML, y los enlaces solo pueden ir a rutas de la app, a direcciones `http(s)` o a `mailto:`.",
+    examples: [
+      {
+        id: "texto-listas-y-tablas",
+        title: "Texto, listas y tablas",
+        description:
+          "Títulos `##` y `###` (aparecen en «En esta página»), negrita, cursiva, enlaces, listas, tareas, tablas y citas.",
+        source: `**Negrita**, _cursiva_, \`código\` y [enlaces](#iconos).
+
+1. Lista numerada
+2. Con varios elementos
+
+- [x] Tarea hecha
+- [ ] Tarea pendiente
+
+| Rol    | Puede editar |
+| ------ | ------------ |
+| Editor | Sí           |
+| Lector | No           |
+
+> Una cita para destacar una idea.`,
+      },
+      {
+        id: "imagenes-y-archivos",
+        title: "Imágenes y archivos",
+        description:
+          "Pega o arrastra un archivo en el editor (imágenes, PDF o texto de hasta 4 MB), o usa **Adjuntar archivo**: se sube y el enlace se inserta solo. Los adjuntos son privados: solo los abre quien tiene acceso a la página.",
+        source: `![Diagrama de arquitectura](attachment:3f0c2a8e-1b7d-4c55-9a51-6c1f0e9d2b44)
+
+[Manual de operación (PDF)](attachment:8a6d4e1f-2c3b-4d5e-8f70-1a2b3c4d5e6f)`,
+        preview: false,
+      },
+    ],
+  },
   {
     id: "componentes",
     title: "Componentes",
@@ -78,35 +106,6 @@ Ejecuta \`pnpm install\` en la raíz del proyecto.
 ### Configura las variables
 Copia \`.env.example\` como \`.env.local\` y completa los valores.
 :::`,
-      },
-      {
-        id: "pestanas-de-codigo",
-        title: "Pestañas de código",
-        description:
-          "El mismo ejemplo en varios lenguajes: cada bloque de código es una pestaña. Su nombre sale de `title` o, si no lo tiene, del lenguaje.",
-        source: `::::code-tabs
-~~~js title="JavaScript"
-const res = await fetch("https://api.ejemplo.com/pedidos")
-~~~
-~~~python title="Python"
-res = requests.get("https://api.ejemplo.com/pedidos")
-~~~
-~~~bash title="cURL"
-curl https://api.ejemplo.com/pedidos
-~~~
-::::`,
-      },
-      {
-        id: "bloques-de-codigo",
-        title: "Bloques de código",
-        description:
-          "Escribe el código entre dos líneas `~~~` (o tres comillas invertidas) e indica el lenguaje para resaltarlo. Con `title` el bloque muestra un nombre; todos tienen botón para copiar.",
-        source: `~~~ts title="src/config.ts"
-export const config = {
-  region: "us-east-1",
-  reintentos: 3,
-}
-~~~`,
       },
       {
         id: "avisos",
@@ -140,7 +139,9 @@ Los miembros con acceso al espacio. Si el espacio es restringido, solo los grupo
 
 :::accordion{title="¿Se puede recuperar una página borrada?"}
 No. Si crees que la vas a necesitar, déjala en borrador en lugar de borrarla.
-:::`,
+:::
+
+#####`,
       },
       {
         id: "tarjetas",
@@ -182,43 +183,34 @@ Escriben en markdown con vista previa en vivo.
 :::
 ::::`,
       },
-    ],
-  },
-  {
-    id: "markdown-basico",
-    title: "Markdown básico",
-    intro:
-      "Además de los componentes funciona todo el markdown de siempre. Por seguridad no se admite HTML, y los enlaces solo pueden ir a rutas de la app, a direcciones `http(s)` o a `mailto:`.",
-    examples: [
-      {
-        id: "texto-listas-y-tablas",
-        title: "Texto, listas y tablas",
+            {
+        id: "bloques-de-codigo",
+        title: "Bloques de código",
         description:
-          "Títulos `##` y `###` (aparecen en «En esta página»), negrita, cursiva, enlaces, listas, tareas, tablas y citas.",
-        source: `**Negrita**, _cursiva_, \`código\` y [enlaces](#iconos).
-
-1. Lista numerada
-2. Con varios elementos
-
-- [x] Tarea hecha
-- [ ] Tarea pendiente
-
-| Rol    | Puede editar |
-| ------ | ------------ |
-| Editor | Sí           |
-| Lector | No           |
-
-> Una cita para destacar una idea.`,
+          "Escribe el código entre dos líneas `~~~` (o tres comillas invertidas) e indica el lenguaje para resaltarlo. Con `title` el bloque muestra un nombre; todos tienen botón para copiar.",
+        source: `~~~ts title="src/config.ts"
+export const config = {
+  region: "us-east-1",
+  reintentos: 3,
+}
+~~~`,
       },
       {
-        id: "imagenes-y-archivos",
-        title: "Imágenes y archivos",
+        id: "pestanas-de-codigo",
+        title: "Pestañas de código",
         description:
-          "Pega o arrastra un archivo en el editor (imágenes, PDF o texto de hasta 4 MB), o usa **Adjuntar archivo**: se sube y el enlace se inserta solo. Los adjuntos son privados: solo los abre quien tiene acceso a la página.",
-        source: `![Diagrama de arquitectura](attachment:3f0c2a8e-1b7d-4c55-9a51-6c1f0e9d2b44)
-
-[Manual de operación (PDF)](attachment:8a6d4e1f-2c3b-4d5e-8f70-1a2b3c4d5e6f)`,
-        preview: false,
+          "El mismo ejemplo en varios lenguajes: cada bloque de código es una pestaña. Su nombre sale de `title` o, si no lo tiene, del lenguaje.",
+        source: `::::code-tabs
+~~~js title="JavaScript"
+const res = await fetch("https://api.ejemplo.com/pedidos")
+~~~
+~~~python title="Python"
+res = requests.get("https://api.ejemplo.com/pedidos")
+~~~
+~~~bash
+curl https://api.ejemplo.com/pedidos
+~~~
+::::`,
       },
     ],
   },
