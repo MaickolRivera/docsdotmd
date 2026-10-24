@@ -3,8 +3,10 @@
 import { BookOpen, Building2, Check, LogOut, Plus, Settings } from "lucide-react"
 import Link from "next/link"
 import { useTheme } from "next-themes"
+import { useState } from "react"
 
 import { signOut } from "@/actions/auth"
+import { NewOrgDialog } from "@/components/orgs/new-org-dialog"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -42,83 +44,90 @@ export function UserMenu({
   settingsHref?: string
 }) {
   const { theme, setTheme } = useTheme()
+  const [newOrgOpen, setNewOrgOpen] = useState(false)
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full" aria-label={t.header.userMenu}>
-          <Avatar className="size-8">
-            <AvatarFallback className="bg-primary/15 text-xs font-semibold text-primary">
-              {initials(name || email)}
-            </AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-64">
-        <DropdownMenuLabel className="flex flex-col gap-0.5">
-          <span className="truncate text-sm font-medium text-foreground">{name || email}</span>
-          <span className="truncate text-xs font-normal text-muted-foreground">{email}</span>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
-            {t.header.organizations}
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            aria-label={t.header.userMenu}
+          >
+            <Avatar className="size-8">
+              <AvatarFallback className="bg-primary/15 pt-1 text-xs font-semibold text-primary">
+                {initials(name || email)}
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-64">
+          <DropdownMenuLabel className="flex flex-col gap-0.5">
+            <span className="truncate text-sm font-medium text-foreground">{name || email}</span>
+            <span className="truncate text-xs font-normal text-muted-foreground">{email}</span>
           </DropdownMenuLabel>
-          {orgs.slice(0, 8).map((org) => (
-            <DropdownMenuItem key={org.slug} asChild>
-              <Link href={`/${org.slug}`}>
-                <Building2 />
-                <span className="flex-1 truncate">{org.name}</span>
-                {org.slug === currentOrgSlug ? <Check className="text-primary" /> : null}
-              </Link>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
+              {t.header.organizations}
+            </DropdownMenuLabel>
+            {orgs.slice(0, 8).map((org) => (
+              <DropdownMenuItem key={org.slug} asChild>
+                <Link href={`/${org.slug}`}>
+                  <Building2 />
+                  <span className="flex-1 truncate">{org.name}</span>
+                  {org.slug === currentOrgSlug ? <Check className="text-primary" /> : null}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+            <DropdownMenuItem asChild>
+              <Link href="/orgs">{t.header.allOrganizations}</Link>
             </DropdownMenuItem>
-          ))}
-          <DropdownMenuItem asChild>
-            <Link href="/orgs">{t.header.allOrganizations}</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/orgs/nueva">
+            <DropdownMenuItem onSelect={() => setNewOrgOpen(true)}>
               <Plus />
               {t.header.newOrganization}
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        {settingsHref ? (
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          {settingsHref ? (
+            <DropdownMenuItem asChild>
+              <Link href={settingsHref}>
+                <Settings />
+                {t.header.settings}
+              </Link>
+            </DropdownMenuItem>
+          ) : null}
+          {/* En otra pestaña, para no perder lo que se esté editando. */}
           <DropdownMenuItem asChild>
-            <Link href={settingsHref}>
-              <Settings />
-              {t.header.settings}
+            <Link href="/guia" target="_blank" rel="noopener">
+              <BookOpen />
+              {t.guide.title}
             </Link>
           </DropdownMenuItem>
-        ) : null}
-        {/* En otra pestaña, para no perder lo que se esté editando. */}
-        <DropdownMenuItem asChild>
-          <Link href="/guia" target="_blank" rel="noopener">
-            <BookOpen />
-            {t.guide.title}
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>{t.header.theme}</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
-              <DropdownMenuRadioItem value="light">{t.header.themeLight}</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="dark">{t.header.themeDark}</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="system">{t.header.themeSystem}</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onSelect={() => {
-            void signOut()
-          }}
-        >
-          <LogOut />
-          {t.auth.signOut}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>{t.header.theme}</DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+                <DropdownMenuRadioItem value="light">{t.header.themeLight}</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="dark">{t.header.themeDark}</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="system">{t.header.themeSystem}</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onSelect={() => {
+              void signOut()
+            }}
+          >
+            <LogOut />
+            {t.auth.signOut}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <NewOrgDialog open={newOrgOpen} onOpenChange={setNewOrgOpen} />
+    </>
   )
 }

@@ -2,6 +2,7 @@ import { ArrowRight, Building2, Plus } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 
+import { NewOrgDialog } from "@/components/orgs/new-org-dialog"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -27,12 +28,12 @@ export default async function OrgsPage() {
           <h1 className="text-2xl font-semibold tracking-tight">{t.orgs.title}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{t.orgs.description}</p>
         </div>
-        <Button asChild>
-          <Link href="/orgs/nueva">
+        <NewOrgDialog>
+          <Button>
             <Plus data-icon="inline-start" />
             {t.orgs.new}
-          </Link>
-        </Button>
+          </Button>
+        </NewOrgDialog>
       </div>
 
       {orgs.length === 0 ? (
@@ -45,9 +46,9 @@ export default async function OrgsPage() {
             <EmptyDescription>{t.orgs.emptyDescription}</EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
-            <Button asChild>
-              <Link href="/orgs/nueva">{t.orgs.new}</Link>
-            </Button>
+            <NewOrgDialog>
+              <Button>{t.orgs.new}</Button>
+            </NewOrgDialog>
           </EmptyContent>
         </Empty>
       ) : (

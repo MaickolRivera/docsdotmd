@@ -11,9 +11,9 @@ export default async function OrgsLayout({ children }: LayoutProps<"/orgs">) {
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-4">
-          <Link href="/orgs" aria-label={t.common.appName}>
+      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-center gap-4 px-4 md:justify-between">
+          <Link href="/" aria-label={t.common.appName}>
             <Logo />
           </Link>
           <div className="flex items-center gap-1">
@@ -26,6 +26,7 @@ export default async function OrgsLayout({ children }: LayoutProps<"/orgs">) {
           </div>
         </div>
       </header>
+
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">{children}</main>
     </div>
   )

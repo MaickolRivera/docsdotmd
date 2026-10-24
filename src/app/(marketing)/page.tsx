@@ -36,7 +36,7 @@ export default function LandingPage() {
               <ThemeToggle />
             </div>
             <Button asChild variant="ghost" className="rounded-full">
-              <Link href="/org">{t.landing.ctaSecondary}</Link>
+              <Link href="/orgs">{t.landing.ctaSecondary}</Link>
             </Button>
             <Button asChild className="rounded-full">
               <Link href="/registro">{t.landing.ctaPrimary}</Link>
