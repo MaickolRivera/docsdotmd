@@ -1,39 +1,63 @@
+<div align="center">
+
 # DOCSdotmd
 
-Plataforma de documentación privada y modular. Con un editor en Markdown enriquecido con componentes visuales interactivos. Organiza el conocimiento por espacios y páginas con acceso estrictamente privado, respaldado por una arquitectura de seguridad robusta con Row-Level Security (RLS).
+**A private, modular documentation platform with a Markdown editor enriched with interactive visual components.**
 
-🌐 **Demo en vivo:** [docsdotmd.vercel.app](https://docsdotmd.vercel.app)
+Organize knowledge into spaces and pages with strictly private access, backed by a robust security architecture built on Row-Level Security (RLS).
 
-![Vista previa de DOCSdotmd](public/docsdotmd_preview.webp)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-docsdotmd.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://docsdotmd.vercel.app)
 
----
+![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=flat-square&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-F69220?style=flat-square&logo=pnpm&logoColor=white)
 
-## Características
+<img src="public/docsdotmd_preview.webp" alt="DOCSdotmd preview" width="800">
 
-- **Organizaciones y espacios**: cada organización agrupa su documentación en espacios (pestañas), con visibilidad para toda la organización o solo para ciertos grupos.
-- **Roles y permisos** (owner, admin, editor, lector) aplicados en la base de datos con Row Level Security: un acceso no autorizado responde **404 real**.
-- **Editor markdown** con vista previa en vivo, inserción de componentes con `/` y borradores locales.
-- **Componentes visuales**: pasos, pestañas de código, avisos, acordeones, tarjetas, botones y columnas.
-- **Búsqueda instantánea** de texto completo (`Ctrl + K`) que respeta los permisos de cada usuario.
-- **Archivos privados**: imágenes y PDF servidos con enlaces firmados que caducan en 60 segundos.
-- **Invitaciones** por correo con enlaces de un solo uso y vencimiento.
-- **Guía pública** en `/guia` con cada componente, su markdown, su resultado y todos los iconos.
-- Interfaz responsive, con tema claro y oscuro.
+</div>
 
-## Stack
+## Table of Contents
 
-- [Next.js 16](https://nextjs.org/) (App Router) + [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) estricto
-- [Tailwind CSS 4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) + typography
-- [Supabase](https://supabase.com/): Auth, Postgres con RLS y Storage privado, con `@supabase/ssr`
-- react-markdown + remark-gfm + remark-directive + rehype-sanitize + rehype-slug
-- [Shiki](https://shiki.style/) (resaltado) y [CodeMirror 6](https://codemirror.net/) (editor)
-- [Zod](https://zod.dev/) + react-hook-form, [cmdk](https://cmdk.paco.me/)
-- [Playwright](https://playwright.dev/) para pruebas unitarias del renderizador y e2e
-- Gestor de paquetes: [pnpm](https://pnpm.io/)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [Project Structure](#project-structure)
+- [Markdown Components](#markdown-components)
+- [Security and Privacy](#security-and-privacy)
+- [Contributing](#contributing)
 
-## Como empezar
+## Features
 
-### Instalación
+- **Organizations and spaces**: each organization groups its documentation into spaces (tabs), visible to the whole organization or only to specific groups.
+- **Roles and permissions** (owner, admin, editor, reader) enforced in the database with Row Level Security: unauthorized access returns a **real 404**.
+- **Markdown editor** with live preview, component insertion with `/` and local drafts.
+- **Visual components**: steps, code tabs, callouts, accordions, cards, buttons and columns.
+- **Instant full-text search** (`Ctrl + K`) that respects each user's permissions.
+- **Private files**: images and PDFs served through signed links that expire in 60 seconds.
+- **Email invitations** with single-use links that expire.
+- **Public guide** at `/guia` with every component, its markdown, its rendered result and all available icons.
+- **Responsive interface** with light and dark themes.
+
+## Tech Stack
+
+- **Next.js 16** (App Router) + **React 19** + strict **TypeScript**
+- **Tailwind CSS 4** + shadcn/ui + typography
+- **Supabase**: Auth, Postgres with RLS and private Storage, using `@supabase/ssr`
+- **react-markdown** + remark-gfm + remark-directive + rehype-sanitize + rehype-slug
+- **Shiki** (syntax highlighting) and **CodeMirror 6** (editor)
+- **Zod** + react-hook-form, cmdk
+- **Playwright** for renderer unit tests and e2e tests
+- Package manager: **pnpm**
+
+## Getting Started
+
+### Installation
 
 ```bash
 git clone https://github.com/MaickolRivera/docsdotmd.git
@@ -41,79 +65,83 @@ cd docsdotmd
 pnpm install
 ```
 
-### Configuración
+### Configuration
 
-1. Base de datos (elige una):
-   - **Local (Docker):** `pnpm db:start` y luego `pnpm db:reset` (aplica `supabase/migrations` y `supabase/seed.sql`).
-   - **Nube:** crea un proyecto en Supabase, `pnpm supabase login`, `pnpm supabase link --project-ref <ref>` y `pnpm db:push` (agrega `--include-seed` para los datos de demo).
-2. Copia `.env.example` como `.env.local` y completa `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` y `NEXT_PUBLIC_SITE_URL`.
-3. En Supabase → Auth → URL Configuration agrega `http://localhost:3000/**` y la URL de producción. Pega las plantillas de `supabase/templates/` en Auth → Email Templates (usan `token_hash`, funcionan aunque el enlace se abra en otro navegador). Para más correos configura un SMTP gratuito (Resend).
-4. `pnpm dev` y entra en http://localhost:3000
-5. Regenera los tipos tras cada migración: `pnpm db:types` (local) o `pnpm db:types:linked`.
+1. **Database** (choose one):
+   - **Local (Docker):** `pnpm db:start`, then `pnpm db:reset` (applies `supabase/migrations` and `supabase/seed.sql`).
+   - **Cloud:** create a Supabase project, then run `pnpm supabase login`, `pnpm supabase link --project-ref <ref>` and `pnpm db:push` (add `--include-seed` for the demo data).
+2. Copy `.env.example` to `.env.local` and fill in `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `NEXT_PUBLIC_SITE_URL`.
+3. In Supabase → Auth → URL Configuration, add `http://localhost:3000/**` and your production URL. Paste the templates from `supabase/templates/` into Auth → Email Templates (they use `token_hash`, so they work even if the link is opened in a different browser). To send more emails, set up a free SMTP provider (Resend).
+4. Run `pnpm dev` and open `http://localhost:3000`.
+5. Regenerate the types after every migration: `pnpm db:types` (local) or `pnpm db:types:linked`.
 
-### Scripts disponibles
+## Available Scripts
 
 ```bash
-pnpm dev          # Servidor de desarrollo
-pnpm build        # Compila para producción
-pnpm lint         # ESLint
-pnpm typecheck    # Tipos de Next.js + TypeScript
-pnpm test:unit    # Pruebas del renderizador de markdown
-pnpm test:e2e     # Pruebas e2e (requieren Supabase local; en CI corren con supabase start)
+pnpm dev            # Development server
+pnpm build          # Production build
+pnpm lint           # ESLint
+pnpm typecheck      # Next.js types + TypeScript
+pnpm test:unit      # Markdown renderer tests
+pnpm test:e2e       # e2e tests (require local Supabase; in CI they run with supabase start)
 ```
 
-## Estructura del proyecto
+## Project Structure
 
-```
+```text
 src/
 ├── app/
-│   ├── (marketing)/   # Landing, guía pública, privacidad y términos
-│   ├── (auth)/        # Login, registro y recuperación de contraseña
-│   ├── (app)/         # Organizaciones, espacios, páginas, editor y ajustes
-│   ├── api/adjuntos/  # Entrega de adjuntos con enlaces firmados
-│   └── auth/callback/ # Destino de los enlaces de los correos
-├── actions/           # Server Actions (auth, orgs, espacios, páginas, miembros...)
-├── components/        # UI: docs, editor, layout, settings, landing, ui (shadcn)
+│   ├── (marketing)/      # Landing, public guide, privacy and terms
+│   ├── (auth)/           # Login, sign-up and password recovery
+│   ├── (app)/            # Organizations, spaces, pages, editor and settings
+│   ├── api/adjuntos/     # Attachment delivery with signed links
+│   └── auth/callback/    # Destination for email links
+├── actions/              # Server Actions (auth, orgs, spaces, pages, members...)
+├── components/           # UI: docs, editor, layout, settings, landing, ui (shadcn)
 ├── lib/
-│   ├── markdown/      # Pipeline del renderizador y esquema de sanitización
-│   ├── supabase/      # Clientes de navegador y servidor, y el proxy de sesión
-│   ├── i18n/          # Textos de la interfaz
-│   └── legal.ts       # Política de datos y términos de uso
-├── proxy.ts           # Sesión, rutas privadas y cabeceras de seguridad (CSP)
-└── types/             # Tipos de la base de datos
+│   ├── markdown/         # Renderer pipeline and sanitization schema
+│   ├── supabase/         # Browser and server clients, and the session proxy
+│   ├── i18n/             # Interface strings
+│   └── legal.ts          # Data policy and terms of use
+├── proxy.ts              # Session, private routes and security headers (CSP)
+└── types/                # Database types
 supabase/
-├── migrations/        # Esquema, funciones de permisos, RLS y storage
-├── templates/         # Plantillas de correo de Auth
-└── seed.sql           # Datos de demo
-tests/                 # unit (renderizador) y e2e
+├── migrations/           # Schema, permission functions, RLS and storage
+├── templates/            # Auth email templates
+└── seed.sql              # Demo data
+tests/                    # unit (renderer) and e2e
 ```
 
-## Componentes de markdown
+## Markdown Components
 
-| Componente         | Sintaxis                                                                       |
-| ------------------ | ------------------------------------------------------------------------------ |
-| Pasos              | `:::steps` con un `###` por paso                                               |
-| Pestañas de código | `::::code-tabs` con bloques `~~~js title="JavaScript"`                         |
-| Aviso              | `:::callout{type="info\|tip\|warning\|danger" title="..."}`                    |
-| Acordeón           | `:::accordion{title="..."}`                                                    |
-| Tarjeta            | `:::card{title="..." icon="rocket" href="/ruta"}` (lista de iconos en `/guia`) |
-| Botón              | `:button[Texto]{href="/registro" variant="primary"}`                           |
-| Columnas           | `::::columns` (separa columnas con `***`)                                      |
-| Adjuntos           | `![alt](attachment:ID)` (se insertan solos al pegar o arrastrar)               |
+| Component | Syntax |
+| --- | --- |
+| Steps | `:::steps` with one `###` per step |
+| Code tabs | `::::code-tabs` with blocks like `~~~js title="JavaScript"` |
+| Callout | `:::callout{type="info\|tip\|warning\|danger" title="..."}` |
+| Accordion | `:::accordion{title="..."}` |
+| Card | `:::card{title="..." icon="rocket" href="/path"}` (icon list at `/guia`) |
+| Button | `:button[Text]{href="/registro" variant="primary"}` |
+| Columns | `::::columns` (separate columns with `***`) |
+| Attachments | `![alt](attachment:ID)` (inserted automatically when you paste or drag a file) |
 
-Los contenedores se pueden anidar escribiendo siempre `:::`: el renderizador ajusta los dos puntos. No se permite HTML crudo ni `javascript:`.
+Containers can be nested by always writing `::::`; the renderer adjusts the colons. Raw HTML and `javascript:` links are not allowed.
 
-## Seguridad y privacidad
+## Security and Privacy
 
-- RLS activo en todas las tablas, sin acceso anónimo y con columnas editables acotadas.
-- Bucket de adjuntos privado, con política de acceso por organización y página.
-- Markdown sin HTML crudo, CSP y cabeceras de protección.
-- Política de datos (`/privacidad`) y términos de uso (`/terminos`) con aceptación explícita al registrarse. Son una base redactada con asistencia de IA, no asesoría jurídica: que un abogado los revise antes de lanzar con usuarios reales.
+- RLS enabled on every table, with no anonymous access and restricted editable columns.
+- Private attachments bucket, with an access policy per organization and page.
+- Markdown without raw HTML, plus CSP and protective headers.
+- Data policy (`/privacidad`) and terms of use (`/terminos`) with explicit acceptance at sign-up. They are a baseline drafted with AI assistance, not legal advice: have a lawyer review them before launching with real users.
 
-## Contribuir
+## Contributing
 
-¡Las contribuciones son bienvenidas! Si quieres añadir componentes de markdown, mejorar el editor o proponer funciones, abre un issue o envía un pull request.
+Contributions are welcome! If you want to add Markdown components, improve the editor or suggest features, open an issue or submit a pull request.
 
 ---
 
-Hecho con ❤️ por [Maickol Rivera](https://github.com/MaickolRivera)
+<div align="center">
+
+Made with ❤️ by Maickol Rivera
+
+</div>
